@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
-import { ShoppingCart, Tag } from "lucide-react";
+import { Tag } from "lucide-react";
 import { getListingBySlug } from "@/lib/supabase/queries/listings";
 import { ImageGallery } from "@/components/catalog/ImageGallery";
 import { AuctionPanel } from "@/components/auction/AuctionPanel";
+import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import type { ListingDetail } from "@/types/catalog";
 import type { Metadata } from "next";
 
@@ -29,7 +30,7 @@ function formatPrice(amount: number) {
 function BuyNowPanel({
   listing,
 }: {
-  listing: Pick<ListingDetail, "buy_now_price" | "quantity_available">;
+  listing: Pick<ListingDetail, "id" | "title" | "images" | "slug" | "buy_now_price" | "quantity_available">;
 }) {
   return (
     <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
@@ -40,7 +41,6 @@ function BuyNowPanel({
         </span>
       </div>
 
-      {/* Price */}
       <div>
         <p className="text-3xl font-bold text-foreground">
           {formatPrice(listing.buy_now_price ?? 0)}
@@ -50,15 +50,14 @@ function BuyNowPanel({
         </p>
       </div>
 
-      {/* Add to cart placeholder — cart in future milestone */}
-      <button
-        disabled
-        className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary/20 py-3 text-sm font-semibold text-primary/60 cursor-not-allowed"
-        title="Koszyk wkrótce dostępny"
-      >
-        <ShoppingCart size={16} />
-        Dodaj do koszyka — wkrótce
-      </button>
+      <AddToCartButton
+        id={listing.id}
+        title={listing.title}
+        image={listing.images?.[0] ?? null}
+        price={listing.buy_now_price ?? 0}
+        maxQuantity={listing.quantity_available}
+        slug={listing.slug}
+      />
     </div>
   );
 }
@@ -114,7 +113,16 @@ export default async function ProductPage({
           {listing.listing_type === "auction" && listing.auctions ? (
             <AuctionPanel auction={listing.auctions} />
           ) : (
-            <BuyNowPanel listing={listing} />
+            <BuyNowPanel
+              listing={{
+                id: listing.id,
+                title: listing.title,
+                images: listing.images,
+                slug: listing.slug,
+                buy_now_price: listing.buy_now_price,
+                quantity_available: listing.quantity_available,
+              }}
+            />
           )}
 
           {/* Description */}
