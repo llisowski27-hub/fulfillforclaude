@@ -153,15 +153,13 @@ export default function CartPage() {
               <span className="text-lg">{PLN(total)}</span>
             </div>
 
-            {/* Checkout — wired in future milestone */}
-            <button
-              disabled
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary/20 py-3 text-sm font-semibold text-primary/60 cursor-not-allowed"
-              title="Checkout wkrótce dostępny"
+            <Link
+              href="/checkout"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground shadow hover:opacity-90 transition-opacity"
             >
               Przejdź do płatności
               <ArrowRight size={16} />
-            </button>
+            </Link>
 
             <Link
               href="/catalog"
