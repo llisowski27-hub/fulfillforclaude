@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { Package, Gavel, Users, LayoutDashboard } from "lucide-react";
 import { CartNavIcon } from "@/components/cart/CartNavIcon";
+import { UserMenu } from "@/components/layout/UserMenu";
+import { getUser } from "@/lib/auth";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const user = await getUser();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -23,17 +27,37 @@ export default function Navbar() {
             <CartNavIcon />
           </nav>
 
-          <nav className="hidden md:flex items-center gap-1 border-l border-border pl-4 ml-4">
-            <NavLink href="/clients" icon={<Users size={16} />}>
-              Klienci
-            </NavLink>
-            <NavLink href="/inventory" icon={<Package size={16} />}>
-              Magazyn
-            </NavLink>
-            <NavLink href="/admin/listings" icon={<LayoutDashboard size={16} />}>
-              Oferty
-            </NavLink>
-          </nav>
+          {/* Auth section */}
+          <div className="hidden md:flex items-center gap-1 border-l border-border pl-4 ml-2">
+            {user ? (
+              <>
+                <NavLink href="/clients" icon={<Users size={16} />}>
+                  Klienci
+                </NavLink>
+                <NavLink href="/inventory" icon={<Package size={16} />}>
+                  Magazyn
+                </NavLink>
+                <NavLink href="/admin/listings" icon={<LayoutDashboard size={16} />}>
+                  Oferty
+                </NavLink>
+                <div className="ml-2 pl-2 border-l border-border">
+                  <UserMenu email={user.email!} />
+                </div>
+              </>
+            ) : (
+              <>
+                <NavLink href="/login" icon={null}>
+                  Zaloguj
+                </NavLink>
+                <Link
+                  href="/register"
+                  className="rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 transition-opacity"
+                >
+                  Rejestracja
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>

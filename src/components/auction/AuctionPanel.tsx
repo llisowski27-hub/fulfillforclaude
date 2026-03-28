@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Gavel, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { toast } from "sonner";
+import { useUser } from "@/hooks/useUser";
 import type { AuctionDetail } from "@/types/catalog";
 
 // ─── helpers ─────────────────────────────────────────────────
@@ -82,6 +84,7 @@ export function AuctionPanel({
 
   const [bidAmount, setBidAmount] = useState(minNext);
   const userEdited = useRef(false);
+  const { user, loading: authLoading } = useUser();
   const { display, isUrgent, isEnded } = useCountdown(auction.end_time);
 
   // Keep bid input at least at minNext when price updates via realtime
@@ -219,13 +222,23 @@ export function AuctionPanel({
             ))}
           </div>
 
-          {/* Submit */}
-          <button
-            onClick={handleBid}
-            className="w-full rounded-xl bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow hover:opacity-90 active:scale-[0.98] transition-all"
-          >
-            Licytuj {formatPLN(bidAmount)}
-          </button>
+          {/* Submit — auth-aware */}
+          {!authLoading && !user ? (
+            <Link
+              href="/login"
+              className="w-full inline-flex items-center justify-center rounded-xl border border-border bg-secondary py-3.5 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all"
+            >
+              Zaloguj się, aby licytować
+            </Link>
+          ) : (
+            <button
+              onClick={handleBid}
+              disabled={authLoading}
+              className="w-full rounded-xl bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow hover:opacity-90 active:scale-[0.98] disabled:opacity-50 transition-all"
+            >
+              Licytuj {formatPLN(bidAmount)}
+            </button>
+          )}
 
           {bidAmount < minNext && (
             <p className="text-center text-xs text-destructive">
