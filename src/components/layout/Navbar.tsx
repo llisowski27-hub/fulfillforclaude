@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ShoppingCart, Package, Gavel, Users, LayoutDashboard } from "lucide-react";
+import { Package, Gavel, Users, LayoutDashboard } from "lucide-react";
+import { CartNavIcon } from "@/components/cart/CartNavIcon";
 
 export default function Navbar() {
   return (
@@ -19,9 +20,7 @@ export default function Navbar() {
             <NavLink href="/auctions" icon={<Gavel size={16} />}>
               Aukcje
             </NavLink>
-            <NavLink href="/cart" icon={<ShoppingCart size={16} />}>
-              Koszyk
-            </NavLink>
+            <CartNavIcon />
           </nav>
 
           <nav className="hidden md:flex items-center gap-1 border-l border-border pl-4 ml-4">
