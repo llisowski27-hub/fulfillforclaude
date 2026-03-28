@@ -1,0 +1,38 @@
+# ============================================================
+# THE LIQUIDATOR — .gitignore
+# ============================================================
+
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build
+.next/
+out/
+build/
+dist/
+
+# Environment (NIGDY nie commituj)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# PM2
+.pm2/
+
+# OS
+Thumbs.db
