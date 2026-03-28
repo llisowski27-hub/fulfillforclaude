@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Gavel, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { toast } from "sonner";
 import type { AuctionDetail } from "@/types/catalog";
@@ -81,7 +81,17 @@ export function AuctionPanel({
   const minNext = currentPrice + auction.min_bid_increment;
 
   const [bidAmount, setBidAmount] = useState(minNext);
+  const userEdited = useRef(false);
   const { display, isUrgent, isEnded } = useCountdown(auction.end_time);
+
+  // Keep bid input at least at minNext when price updates via realtime
+  useEffect(() => {
+    if (!userEdited.current) {
+      setBidAmount(minNext);
+    } else {
+      setBidAmount((prev) => Math.max(minNext, prev));
+    }
+  }, [minNext]);
   const hasStarted = new Date(auction.start_time) <= new Date();
   const cfg = STATUS[userStatus];
 
@@ -185,9 +195,10 @@ export function AuctionPanel({
               min={minNext}
               step={auction.min_bid_increment}
               value={bidAmount}
-              onChange={(e) =>
-                setBidAmount(Math.max(minNext, Number(e.target.value)))
-              }
+              onChange={(e) => {
+                userEdited.current = true;
+                setBidAmount(Math.max(minNext, Number(e.target.value)));
+              }}
               className="w-full rounded-xl border border-border bg-background px-4 py-3 pr-12 text-base font-semibold text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
             />
             <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">

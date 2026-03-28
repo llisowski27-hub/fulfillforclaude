@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Tag } from "lucide-react";
 import { getListingBySlug } from "@/lib/supabase/queries/listings";
 import { ImageGallery } from "@/components/catalog/ImageGallery";
-import { AuctionPanel } from "@/components/auction/AuctionPanel";
+import { LiveAuctionPanel } from "@/components/auction/LiveAuctionPanel";
 import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import type { ListingDetail } from "@/types/catalog";
 import type { Metadata } from "next";
@@ -111,7 +111,10 @@ export default async function ProductPage({
 
           {/* Auction or Buy-now panel */}
           {listing.listing_type === "auction" && listing.auctions ? (
-            <AuctionPanel auction={listing.auctions} />
+            <LiveAuctionPanel
+              auctionId={listing.auctions.id}
+              initial={listing.auctions}
+            />
           ) : (
             <BuyNowPanel
               listing={{
