@@ -12,14 +12,36 @@ export type RecentBid = {
 
 export function useRealtimeAuction(
   auctionId: string,
-  initial: AuctionDetail
+  initial: AuctionDetail,
+  userId?: string | null
 ) {
   const [auction, setAuction] = useState<AuctionDetail>(initial);
   const [recentBids, setRecentBids] = useState<RecentBid[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [myBid, setMyBid] = useState<number | null>(null);
 
-  // Keep initial in a ref so the effect doesn't re-run when it changes
   const initialRef = useRef(initial);
+
+  // Fetch user's existing highest bid on this auction
+  useEffect(() => {
+    if (!userId) {
+      setMyBid(null);
+      return;
+    }
+
+    const supabase = getSupabaseBrowserClient();
+    supabase
+      .from("bids")
+      .select("amount")
+      .eq("auction_id", auctionId)
+      .eq("bidder_id", userId)
+      .order("amount", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) setMyBid(data.amount);
+      });
+  }, [auctionId, userId]);
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
@@ -66,7 +88,10 @@ export function useRealtimeAuction(
             created_at: string;
           };
           setRecentBids((prev) =>
-            [{ id: bid.id, amount: bid.amount, created_at: bid.created_at }, ...prev].slice(0, 5)
+            [
+              { id: bid.id, amount: bid.amount, created_at: bid.created_at },
+              ...prev,
+            ].slice(0, 5)
           );
         }
       )
@@ -79,5 +104,5 @@ export function useRealtimeAuction(
     };
   }, [auctionId]);
 
-  return { auction, recentBids, isConnected };
+  return { auction, recentBids, isConnected, myBid, setMyBid };
 }
