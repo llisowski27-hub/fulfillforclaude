@@ -13,7 +13,7 @@
 
 @keyframes flash-price {
   0%   { background-color: transparent; }
-  25%  { background-color: rgb(16 185 129 / 0.18); border-radius: 0.5rem; }
+  25%  { background-color: rgb(251 191 36 / 0.15); border-radius: 0.5rem; }
   100% { background-color: transparent; }
 }
 
@@ -24,30 +24,31 @@
 
 @layer base {
   :root {
-    --background: 210 20% 96%;
-    --foreground: 220 15% 10%;
+    /* ── Option A: Premium Dark (slate-950 + amber-400) ── */
+    --background: 222 84% 5%;       /* slate-950 */
+    --foreground: 210 40% 98%;      /* slate-50  */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 10%;
+    --card: 222 47% 9%;             /* slate-900 */
+    --card-foreground: 210 40% 98%;
 
-    --primary: 160 84% 39%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 43 96% 56%;          /* amber-400 */
+    --primary-foreground: 222 47% 9%;
 
-    --secondary: 210 20% 92%;
-    --secondary-foreground: 220 15% 25%;
+    --secondary: 215 28% 17%;       /* slate-800 */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 20% 90%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 215 28% 14%;           /* slate-850 */
+    --muted-foreground: 215 16% 55%; /* slate-400 */
 
-    --accent: 160 84% 39%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 43 96% 56%;
+    --accent-foreground: 222 47% 9%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 15% 88%;
-    --input: 210 15% 88%;
-    --ring: 160 84% 39%;
+    --border: 215 28% 17%;          /* slate-800 */
+    --input: 215 28% 17%;
+    --ring: 43 96% 56%;             /* amber-400 */
 
     --radius: 0.75rem;
   }
@@ -62,8 +63,15 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  /* Subtle scrollbar dla dark theme */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: hsl(222 84% 5%); }
+  ::-webkit-scrollbar-thumb { background: hsl(215 28% 25%); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(43 96% 56% / 0.6); }
 }

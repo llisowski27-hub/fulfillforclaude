@@ -13,11 +13,11 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 const STATUS_COLOR: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-700",
-  confirmed: "bg-blue-100 text-blue-700",
-  shipped: "bg-purple-100 text-purple-700",
-  delivered: "bg-emerald-100 text-emerald-700",
-  cancelled: "bg-red-100 text-red-700",
+  pending: "bg-yellow-500/15 text-yellow-400 border border-yellow-500/20",
+  confirmed: "bg-blue-500/15 text-blue-400 border border-blue-500/20",
+  shipped: "bg-purple-500/15 text-purple-400 border border-purple-500/20",
+  delivered: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20",
+  cancelled: "bg-red-500/15 text-red-400 border border-red-500/20",
 };
 
 function formatDate(iso: string) {
@@ -40,17 +40,17 @@ export default async function AccountOrdersPage() {
 
   if (orders.length === 0) {
     return (
-      <div className="rounded-2xl bg-white p-12 shadow-sm text-center">
-        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
-          <ShoppingBag size={28} className="text-gray-400" />
+      <div className="rounded-2xl bg-card border border-border p-12 text-center">
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-secondary">
+          <ShoppingBag size={28} className="text-muted-foreground" />
         </div>
-        <p className="text-gray-900 font-medium">Brak zamówień</p>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="text-foreground font-medium">Brak zamówień</p>
+        <p className="mt-1 text-sm text-muted-foreground">
           Nie złożyłeś jeszcze żadnego zamówienia.
         </p>
         <Link
           href="/catalog"
-          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors"
+          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:opacity-90 transition-opacity"
         >
           Przeglądaj katalog
         </Link>
@@ -62,56 +62,45 @@ export default async function AccountOrdersPage() {
     <div className="space-y-4">
       {orders.map((order) => {
         const statusLabel = STATUS_LABEL[order.status] ?? order.status;
-        const statusColor =
-          STATUS_COLOR[order.status] ?? "bg-gray-100 text-gray-700";
+        const statusColor = STATUS_COLOR[order.status] ?? "bg-secondary text-muted-foreground";
         const itemCount = Array.isArray(order.items) ? order.items.length : 0;
 
         return (
-          <div
-            key={order.id}
-            className="rounded-2xl bg-white p-6 shadow-sm"
-          >
+          <div key={order.id} className="rounded-2xl bg-card border border-border p-6 transition-colors hover:border-border/80">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-xs text-gray-500 font-mono">
+                <p className="text-xs text-muted-foreground font-mono">
                   #{order.id.slice(0, 8).toUpperCase()}
                 </p>
-                <p className="mt-0.5 text-sm text-gray-500">
+                <p className="mt-0.5 text-sm text-muted-foreground">
                   {formatDate(order.created_at)}
                 </p>
               </div>
-
-              <span
-                className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${statusColor}`}
-              >
+              <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${statusColor}`}>
                 {statusLabel}
               </span>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 pt-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Package size={15} className="text-gray-400" />
-                {itemCount === 1
-                  ? "1 produkt"
-                  : `${itemCount} produkty/ów`}
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Package size={15} />
+                {itemCount === 1 ? "1 produkt" : `${itemCount} produkty/ów`}
               </div>
-
               <div className="flex items-center gap-4">
-                <p className="text-base font-semibold text-gray-900">
+                <p className="text-base font-bold text-primary">
                   {formatPrice(order.total_amount)}
                 </p>
                 <Link
                   href={`/order/${order.id}/success`}
-                  className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors"
                 >
                   Szczegóły
                 </Link>
               </div>
             </div>
 
-            <div className="mt-3 text-xs text-gray-500">
-              {order.shipping_name} · {order.shipping_street},{" "}
-              {order.shipping_city} {order.shipping_postal}
+            <div className="mt-3 text-xs text-muted-foreground">
+              {order.shipping_name} · {order.shipping_street}, {order.shipping_city} {order.shipping_postal}
             </div>
           </div>
         );
