@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LogOut, User } from "lucide-react";
 import { logoutAction } from "@/actions/auth";
@@ -20,10 +21,14 @@ export function UserMenu({ email }: { email: string }) {
 
   return (
     <div className="flex items-center gap-1">
-      <span className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-muted-foreground">
+      <Link
+        href="/account/orders"
+        className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+        title="Moje konto"
+      >
         <User size={14} />
         <span className="max-w-[120px] truncate">{short}</span>
-      </span>
+      </Link>
       <button
         onClick={handleLogout}
         disabled={loading}
