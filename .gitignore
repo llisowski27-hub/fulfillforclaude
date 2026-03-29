@@ -12,6 +12,7 @@ node_modules/
 out/
 build/
 dist/
+tsconfig.tsbuildinfo
 
 # Environment (NIGDY nie commituj)
 .env
