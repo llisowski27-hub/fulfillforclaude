@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 import { AuctionPanel } from "./AuctionPanel";
 import { useRealtimeAuction } from "@/hooks/useRealtimeAuction";
+import { useUser } from "@/hooks/useUser";
+import { placeBidAction } from "@/actions/auction";
 import type { AuctionDetail } from "@/types/catalog";
 
 const PLN = (n: number) =>
@@ -15,32 +18,37 @@ const PLN = (n: number) =>
 export function LiveAuctionPanel({
   auctionId,
   initial,
-  userStatus,
 }: {
   auctionId: string;
   initial: AuctionDetail;
-  userStatus?: "leading" | "outbid" | "neutral";
 }) {
-  const { auction, recentBids, isConnected } = useRealtimeAuction(
-    auctionId,
-    initial
-  );
+  const { user, loading: authLoading } = useUser();
+  const { auction, recentBids, isConnected, myBid, setMyBid } =
+    useRealtimeAuction(auctionId, initial, user?.id);
 
-  // Price flash animation
+  const [submitting, setSubmitting] = useState(false);
+
+  // ── userStatus derived from myBid vs current price ───────────
+  const userStatus = useMemo<"leading" | "outbid" | "neutral">(() => {
+    if (!myBid || !user) return "neutral";
+    const current = auction.current_price ?? auction.starting_price;
+    return myBid >= current ? "leading" : "outbid";
+  }, [myBid, auction.current_price, auction.starting_price, user]);
+
+  // ── Price flash animation ─────────────────────────────────────
   const prevPrice = useRef(auction.current_price);
   const [priceFlash, setPriceFlash] = useState(false);
   useEffect(() => {
     if (prevPrice.current !== auction.current_price) {
       prevPrice.current = auction.current_price;
       setPriceFlash(false);
-      // Retrigger CSS animation by toggling
       requestAnimationFrame(() => setPriceFlash(true));
       const t = setTimeout(() => setPriceFlash(false), 800);
       return () => clearTimeout(t);
     }
   }, [auction.current_price]);
 
-  // Anti-sniping notification
+  // ── Anti-sniping notification ─────────────────────────────────
   const prevEndTime = useRef(auction.end_time);
   const [showExtended, setShowExtended] = useState(false);
   useEffect(() => {
@@ -51,6 +59,23 @@ export function LiveAuctionPanel({
       return () => clearTimeout(t);
     }
   }, [auction.end_time]);
+
+  // ── Bid handler ───────────────────────────────────────────────
+  async function handleBid(amount: number) {
+    setSubmitting(true);
+    try {
+      const result = await placeBidAction(auctionId, amount);
+      if (!result.success) {
+        toast.error(result.error);
+        return;
+      }
+      // Optimistic update: user is now leading
+      setMyBid(result.amount);
+      toast.success(`Oferta ${PLN(result.amount)} złożona!`);
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="space-y-3">
@@ -81,7 +106,13 @@ export function LiveAuctionPanel({
 
       {/* Main panel — flash wrapper */}
       <div className={priceFlash ? "animate-flash-price" : ""}>
-        <AuctionPanel auction={auction} userStatus={userStatus} />
+        <AuctionPanel
+          auction={auction}
+          userStatus={userStatus}
+          isAuthenticated={!authLoading && !!user}
+          onBid={handleBid}
+          submitting={submitting}
+        />
       </div>
 
       {/* Bid feed */}

@@ -2,9 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Gavel, TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { toast } from "sonner";
-import { useUser } from "@/hooks/useUser";
+import { Gavel, TrendingUp, TrendingDown, Minus, Loader2 } from "lucide-react";
 import type { AuctionDetail } from "@/types/catalog";
 
 // ─── helpers ─────────────────────────────────────────────────
@@ -75,16 +73,21 @@ const STATUS = {
 export function AuctionPanel({
   auction,
   userStatus = "neutral",
+  isAuthenticated = false,
+  onBid,
+  submitting = false,
 }: {
   auction: AuctionDetail;
   userStatus?: UserStatus;
+  isAuthenticated?: boolean;
+  onBid?: (amount: number) => Promise<void>;
+  submitting?: boolean;
 }) {
   const currentPrice = auction.current_price ?? auction.starting_price;
   const minNext = currentPrice + auction.min_bid_increment;
 
   const [bidAmount, setBidAmount] = useState(minNext);
   const userEdited = useRef(false);
-  const { user, loading: authLoading } = useUser();
   const { display, isUrgent, isEnded } = useCountdown(auction.end_time);
 
   // Keep bid input at least at minNext when price updates via realtime
@@ -95,20 +98,19 @@ export function AuctionPanel({
       setBidAmount((prev) => Math.max(minNext, prev));
     }
   }, [minNext]);
+
   const hasStarted = new Date(auction.start_time) <= new Date();
   const cfg = STATUS[userStatus];
 
   function bump(delta: number) {
+    userEdited.current = true;
     setBidAmount((prev) => Math.max(minNext, prev + delta));
   }
 
-  function handleBid() {
-    if (bidAmount < minNext) {
-      toast.error(`Minimalna oferta: ${formatPLN(minNext)}`);
-      return;
-    }
-    // Auth + submit wired in future milestone
-    toast.info("Wymagane logowanie, aby licytować.");
+  async function handleBid() {
+    if (!onBid) return;
+    userEdited.current = false;
+    await onBid(bidAmount);
   }
 
   return (
@@ -202,7 +204,8 @@ export function AuctionPanel({
                 userEdited.current = true;
                 setBidAmount(Math.max(minNext, Number(e.target.value)));
               }}
-              className="w-full rounded-xl border border-border bg-background px-4 py-3 pr-12 text-base font-semibold text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+              disabled={submitting}
+              className="w-full rounded-xl border border-border bg-background px-4 py-3 pr-12 text-base font-semibold text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all disabled:opacity-60"
             />
             <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
               zł
@@ -215,7 +218,8 @@ export function AuctionPanel({
               <button
                 key={delta}
                 onClick={() => bump(delta)}
-                className="rounded-lg border border-border bg-secondary py-2 text-sm font-medium text-foreground hover:bg-primary/10 hover:border-primary/40 hover:text-primary transition-colors"
+                disabled={submitting}
+                className="rounded-lg border border-border bg-secondary py-2 text-sm font-medium text-foreground hover:bg-primary/10 hover:border-primary/40 hover:text-primary transition-colors disabled:opacity-50"
               >
                 +{delta}
               </button>
@@ -223,7 +227,7 @@ export function AuctionPanel({
           </div>
 
           {/* Submit — auth-aware */}
-          {!authLoading && !user ? (
+          {!isAuthenticated ? (
             <Link
               href="/login"
               className="w-full inline-flex items-center justify-center rounded-xl border border-border bg-secondary py-3.5 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all"
@@ -233,10 +237,17 @@ export function AuctionPanel({
           ) : (
             <button
               onClick={handleBid}
-              disabled={authLoading}
-              className="w-full rounded-xl bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow hover:opacity-90 active:scale-[0.98] disabled:opacity-50 transition-all"
+              disabled={submitting || bidAmount < minNext}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow hover:opacity-90 active:scale-[0.98] disabled:opacity-50 transition-all"
             >
-              Licytuj {formatPLN(bidAmount)}
+              {submitting ? (
+                <>
+                  <Loader2 size={15} className="animate-spin" />
+                  Składanie oferty...
+                </>
+              ) : (
+                <>Licytuj {formatPLN(bidAmount)}</>
+              )}
             </button>
           )}
 

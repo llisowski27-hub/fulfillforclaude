@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Loader2, ArrowRight, Lock } from "lucide-react";
 import { useCart } from "@/components/cart/CartContext";
+import { useUser } from "@/hooks/useUser";
 import { createOrderAction } from "@/actions/checkout";
 import { CheckoutSchema, type CheckoutFormData } from "@/types/checkout";
 
@@ -20,6 +21,7 @@ const PLN = (n: number) =>
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotal, totalItems, clear } = useCart();
+  const { user, loading: authLoading } = useUser();
   const shipping = subtotal > 0 ? 19.99 : 0;
   const total = subtotal + shipping;
 
@@ -35,6 +37,13 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (items.length === 0) router.replace("/cart");
   }, [items.length, router]);
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.replace("/login?next=/checkout");
+    }
+  }, [authLoading, user, router]);
 
   async function onSubmit(data: CheckoutFormData) {
     const result = await createOrderAction({
@@ -52,7 +61,7 @@ export default function CheckoutPage() {
     router.push(`/order/${result.orderId}/success`);
   }
 
-  if (items.length === 0) return null; // redirecting
+  if (items.length === 0 || (!authLoading && !user)) return null; // redirecting
 
   return (
     <div className="space-y-6">

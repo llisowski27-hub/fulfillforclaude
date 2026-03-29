@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Package, Gavel, Users, LayoutDashboard } from "lucide-react";
+import { Package, Gavel } from "lucide-react";
 import { CartNavIcon } from "@/components/cart/CartNavIcon";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { getUser } from "@/lib/auth";
@@ -31,15 +31,6 @@ export default async function Navbar() {
           <div className="hidden md:flex items-center gap-1 border-l border-border pl-4 ml-2">
             {user ? (
               <>
-                <NavLink href="/clients" icon={<Users size={16} />}>
-                  Klienci
-                </NavLink>
-                <NavLink href="/inventory" icon={<Package size={16} />}>
-                  Magazyn
-                </NavLink>
-                <NavLink href="/admin/listings" icon={<LayoutDashboard size={16} />}>
-                  Oferty
-                </NavLink>
                 <div className="ml-2 pl-2 border-l border-border">
                   <UserMenu email={user.email!} />
                 </div>
