@@ -31,11 +31,11 @@ function getBidStatus(bid: {
 }
 
 const BID_STATUS_CONFIG: Record<BidStatus, { label: string; color: string; icon: typeof TrendingUp }> = {
-  winning: { label: "Prowadzisz", color: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20", icon: TrendingUp },
-  outbid:  { label: "Przebity",   color: "bg-red-500/15 text-red-400 border border-red-500/20",           icon: TrendingDown },
-  won:     { label: "Wygrałeś",   color: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20", icon: TrendingUp },
-  lost:    { label: "Przegrałeś", color: "bg-secondary text-muted-foreground border border-border",       icon: Minus },
-  active:  { label: "Aktywna",    color: "bg-blue-500/15 text-blue-400 border border-blue-500/20",        icon: TrendingUp },
+  winning: { label: "Prowadzisz",  color: "bg-emerald-100 text-emerald-700", icon: TrendingUp },
+  outbid:  { label: "Przebity",    color: "bg-red-100 text-red-600",         icon: TrendingDown },
+  won:     { label: "Wygrałeś",    color: "bg-emerald-100 text-emerald-700", icon: TrendingUp },
+  lost:    { label: "Przegrałeś",  color: "bg-gray-100 text-gray-500",       icon: Minus },
+  active:  { label: "Aktywna",     color: "bg-blue-100 text-blue-700",       icon: TrendingUp },
 };
 
 export default async function AccountBidsPage() {
@@ -43,18 +43,14 @@ export default async function AccountBidsPage() {
 
   if (bids.length === 0) {
     return (
-      <div className="rounded-2xl bg-card border border-border p-12 text-center">
+      <div className="rounded-2xl bg-card border border-border p-12 shadow-sm text-center">
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-secondary">
           <Gavel size={28} className="text-muted-foreground" />
         </div>
         <p className="text-foreground font-medium">Brak ofert</p>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Nie złożyłeś jeszcze żadnej oferty na aukcji.
-        </p>
-        <Link
-          href="/catalog"
-          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:opacity-90 transition-opacity"
-        >
+        <p className="mt-1 text-sm text-muted-foreground">Nie złożyłeś jeszcze żadnej oferty na aukcji.</p>
+        <Link href="/catalog"
+          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-rose-600 to-orange-500 px-5 py-2.5 text-sm font-bold text-white shadow hover:opacity-90 transition-opacity">
           Przeglądaj aukcje
         </Link>
       </div>
@@ -73,7 +69,7 @@ export default async function AccountBidsPage() {
         const href = listing?.slug ? `/product/${listing.slug}` : listing ? `/product/${listing.id}` : "#";
 
         return (
-          <div key={bid.id} className="rounded-2xl bg-card border border-border p-4 sm:p-6 transition-colors hover:border-border/80">
+          <div key={bid.id} className="rounded-2xl bg-card border border-border p-4 shadow-sm sm:p-6 hover:shadow-md hover:border-rose-200 transition-all">
             <div className="flex gap-4">
               <Link href={href} className="shrink-0">
                 <div className="h-16 w-16 overflow-hidden rounded-xl bg-secondary sm:h-20 sm:w-20">
@@ -90,8 +86,7 @@ export default async function AccountBidsPage() {
 
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-start justify-between gap-2">
-                  <Link href={href}
-                    className="truncate text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                  <Link href={href} className="truncate text-sm font-semibold text-foreground hover:text-rose-600 transition-colors">
                     {listing?.title ?? "Aukcja"}
                   </Link>
                   <span className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${config.color}`}>
@@ -103,17 +98,14 @@ export default async function AccountBidsPage() {
                 <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                   <span>
                     Twoja oferta:{" "}
-                    <span className="font-bold text-primary">{formatPrice(bid.amount)}</span>
+                    <span className="font-black bg-gradient-to-r from-rose-600 to-orange-500 bg-clip-text text-transparent">
+                      {formatPrice(bid.amount)}
+                    </span>
                   </span>
                   {auction?.current_price != null && (
-                    <span>
-                      Aktualna:{" "}
-                      <span className="font-semibold text-foreground">{formatPrice(auction.current_price)}</span>
-                    </span>
+                    <span>Aktualna: <span className="font-semibold text-foreground">{formatPrice(auction.current_price)}</span></span>
                   )}
-                  {auction?.bid_count != null && (
-                    <span>{auction.bid_count} ofert łącznie</span>
-                  )}
+                  {auction?.bid_count != null && <span>{auction.bid_count} ofert łącznie</span>}
                 </div>
 
                 <p className="mt-1 text-xs text-muted-foreground/60">{formatDate(bid.created_at)}</p>

@@ -25,12 +25,12 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
   const msLeft = auctions?.end_time
     ? new Date(auctions.end_time).getTime() - Date.now()
     : null;
-  const isUrgent = msLeft !== null && msLeft > 0 && msLeft < 60 * 60 * 1000; // < 1h
+  const isUrgent = msLeft !== null && msLeft > 0 && msLeft < 60 * 60 * 1000;
 
   return (
     <Link
       href={href}
-      className="group flex flex-col rounded-2xl bg-card border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_8px_32px_rgba(251,191,36,0.12)] hover:border-primary/30"
+      className="group flex flex-col rounded-2xl bg-card border border-border overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-rose-500/10 hover:border-rose-200"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] bg-muted overflow-hidden">
@@ -53,23 +53,20 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
           </div>
         )}
 
-        {/* Gradient overlay bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
         {/* Type badge */}
         <div className="absolute top-2.5 left-2.5">
           {isAuction ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-xs font-bold text-primary-foreground shadow-lg">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-rose-600 to-orange-500 px-2.5 py-1 text-xs font-bold text-white shadow-md">
               {isUrgent && (
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
                 </span>
               )}
               Aukcja
             </span>
           ) : (
-            <span className="inline-flex items-center rounded-full bg-slate-800/90 border border-slate-700 px-2.5 py-1 text-xs font-semibold text-slate-300 backdrop-blur-sm">
+            <span className="inline-flex items-center rounded-full bg-white/90 border border-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-700 backdrop-blur-sm shadow-sm">
               Kup teraz
             </span>
           )}
@@ -82,8 +79,8 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
           {title}
         </h3>
 
-        {/* Price — dominant */}
-        <p className="text-xl font-black text-primary tracking-tight">
+        {/* Price */}
+        <p className="text-xl font-black bg-gradient-to-r from-rose-600 to-orange-500 bg-clip-text text-transparent tracking-tight">
           {formatPrice(displayPrice)}
         </p>
 

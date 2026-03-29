@@ -8,17 +8,17 @@ export default async function Navbar() {
   const user = await getUser();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur-xl shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-rose-600 to-orange-500 text-white shadow-md shadow-rose-500/25 transition-transform group-hover:scale-105">
               <Zap size={16} strokeWidth={2.5} />
             </div>
             <span className="text-base font-black tracking-tight text-foreground">
-              The <span className="text-primary">Liquidator</span>
+              The <span className="bg-gradient-to-r from-rose-600 to-orange-500 bg-clip-text text-transparent">Liquidator</span>
             </span>
           </Link>
 
@@ -38,7 +38,7 @@ export default async function Navbar() {
                 <NavLink href="/login" icon={null}>Zaloguj</NavLink>
                 <Link
                   href="/register"
-                  className="rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] transition-all"
+                  className="rounded-lg bg-gradient-to-r from-rose-600 to-orange-500 px-4 py-2 text-sm font-bold text-white shadow shadow-rose-500/20 hover:shadow-rose-500/30 hover:scale-[1.02] transition-all"
                 >
                   Rejestracja
                 </Link>
@@ -53,9 +53,7 @@ export default async function Navbar() {
 }
 
 function NavLink({
-  href,
-  icon,
-  children,
+  href, icon, children,
 }: {
   href: string;
   icon: React.ReactNode;

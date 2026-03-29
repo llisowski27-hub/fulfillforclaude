@@ -9,11 +9,23 @@
   .animate-slide-down {
     animation: slide-down 0.25s ease-out;
   }
+  .btn-gradient {
+    background: linear-gradient(135deg, #e11d48 0%, #f97316 100%);
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #be123c 0%, #ea6c10 100%);
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #e11d48 0%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
 
 @keyframes flash-price {
   0%   { background-color: transparent; }
-  25%  { background-color: rgb(251 191 36 / 0.15); border-radius: 0.5rem; }
+  25%  { background-color: rgb(225 29 72 / 0.10); border-radius: 0.5rem; }
   100% { background-color: transparent; }
 }
 
@@ -24,31 +36,31 @@
 
 @layer base {
   :root {
-    /* ── Option A: Premium Dark (slate-950 + amber-400) ── */
-    --background: 222 84% 5%;       /* slate-950 */
-    --foreground: 210 40% 98%;      /* slate-50  */
+    /* ── Option B: Energetyczny (white + rose-600/orange-500) ── */
+    --background: 210 20% 98%;      /* gray-50  */
+    --foreground: 221 39% 11%;      /* gray-900 */
 
-    --card: 222 47% 9%;             /* slate-900 */
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;              /* white    */
+    --card-foreground: 221 39% 11%;
 
-    --primary: 43 96% 56%;          /* amber-400 */
-    --primary-foreground: 222 47% 9%;
+    --primary: 347 77% 50%;         /* rose-600 */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 28% 17%;       /* slate-800 */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 14% 96%;       /* gray-100 */
+    --secondary-foreground: 221 39% 11%;
 
-    --muted: 215 28% 14%;           /* slate-850 */
-    --muted-foreground: 215 16% 55%; /* slate-400 */
+    --muted: 220 14% 96%;           /* gray-100 */
+    --muted-foreground: 220 9% 46%; /* gray-500 */
 
-    --accent: 43 96% 56%;
-    --accent-foreground: 222 47% 9%;
+    --accent: 347 77% 50%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 28% 17%;          /* slate-800 */
-    --input: 215 28% 17%;
-    --ring: 43 96% 56%;             /* amber-400 */
+    --border: 220 13% 91%;          /* gray-200 */
+    --input: 220 13% 91%;
+    --ring: 347 77% 50%;            /* rose-600 */
 
     --radius: 0.75rem;
   }
@@ -60,18 +72,10 @@
     --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
   }
 
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
 
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-
-  /* Subtle scrollbar dla dark theme */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: hsl(222 84% 5%); }
-  ::-webkit-scrollbar-thumb { background: hsl(215 28% 25%); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: hsl(43 96% 56% / 0.6); }
 }
