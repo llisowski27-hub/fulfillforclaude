@@ -27,7 +27,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-lg text-white/70 leading-relaxed max-w-lg">
-            Platforma aukcyjna i sprzedażowa dla firm.
+            Platforma sprzedażowa i obsługa logistyczna dla firm.
           </p>
 
           <div className="flex flex-wrap gap-3 pt-2">
