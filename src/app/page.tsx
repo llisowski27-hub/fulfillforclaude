@@ -15,21 +15,6 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -bottom-8 -left-8 h-48 w-48 rounded-full bg-blue-400/10 blur-2xl" />
         {/* Subtle grid */}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
-        {/* Right-side decorative stat card */}
-        <div className="pointer-events-none absolute right-10 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-3 opacity-40">
-          <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-white">
-            <p className="text-xs text-white/50 mb-0.5">Aktywne aukcje</p>
-            <p className="text-2xl font-black text-blue-300">24</p>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-white">
-            <p className="text-xs text-white/50 mb-0.5">Licytujących</p>
-            <p className="text-2xl font-black text-blue-300">138</p>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur px-5 py-3 text-white">
-            <p className="text-xs text-white/50 mb-0.5">Śr. oszczędność</p>
-            <p className="text-2xl font-black text-amber-400">43%</p>
-          </div>
-        </div>
 
         <div className="relative max-w-2xl space-y-6">
           {/* Live badge */}
