@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap, Bell, TrendingUp } from "lucide-react";
+import { Zap, Bell } from "lucide-react";
 import { CartNavIcon } from "@/components/cart/CartNavIcon";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { SearchBar } from "@/components/layout/SearchBar";
@@ -20,12 +20,9 @@ export default async function Navbar() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-600 to-green-400 text-white shadow-md shadow-emerald-500/30 transition-transform group-hover:scale-105">
               <Zap size={16} strokeWidth={2.5} />
             </div>
-            <div className="hidden lg:flex flex-col leading-none">
-              <span className="text-base font-black tracking-tight text-foreground">
-                The <span className="bg-gradient-to-r from-amber-500 to-orange-400 bg-clip-text text-transparent">Liquidator</span>
-              </span>
-              <span className="badge-live" style={{ fontSize: "0.6rem", padding: "0.05rem 0.4rem" }}>Live auctions</span>
-            </div>
+            <span className="hidden lg:block text-base font-black tracking-tight text-foreground">
+              The <span className="bg-gradient-to-r from-amber-500 to-orange-400 bg-clip-text text-transparent">Liquidator</span>
+            </span>
           </Link>
 
           {/* Search bar — grows to fill space */}
@@ -78,30 +75,8 @@ export default async function Navbar() {
         </div>
       </div>
 
-      {/* ── Ticker bar ── */}
-      <div className="border-t border-emerald-50 bg-emerald-50/60 px-4 sm:px-6 lg:px-8 py-1 hidden md:flex items-center gap-6">
-        <div className="mx-auto max-w-7xl w-full flex items-center gap-6">
-          <div className="flex items-center gap-1.5 text-xs text-emerald-700 font-medium">
-            <TrendingUp size={11} />
-            <span>Rynek aktywny</span>
-          </div>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            <TickerItem label="Aktywne aukcje" value="24" up />
-            <TickerItem label="Licytujących" value="138" up />
-            <TickerItem label="Ostatnia transakcja" value="2 min temu" />
-          </div>
-        </div>
-      </div>
 
     </header>
   );
 }
 
-function TickerItem({ label, value, up }: { label: string; value: string; up?: boolean }) {
-  return (
-    <span className="flex items-center gap-1">
-      <span className="text-muted-foreground">{label}:</span>
-      <span className={up ? "text-win font-semibold" : "text-foreground font-medium"}>{value}</span>
-    </span>
-  );
-}
