@@ -147,8 +147,8 @@
 
 @layer base {
   :root {
-    /* ── Tło i tekst — jasne (marketplace style: Allegro / eBay) ── */
-    --background: 210 20% 98%;      /* gray-50  */
+    /* ── Tło i tekst — kremowy/nano-grey (marketplace style: Allegro / eBay) ── */
+    --background: 40 25% 97%;       /* warm cream */
     --foreground: 221 39% 11%;      /* gray-900 */
 
     --card: 0 0% 100%;

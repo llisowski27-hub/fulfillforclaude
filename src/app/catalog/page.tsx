@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Package } from "lucide-react";
+import { Package, TrendingDown } from "lucide-react";
 import { getActiveListings } from "@/lib/supabase/queries/listings";
 import { ProductCard } from "@/components/catalog/ProductCard";
 
@@ -7,7 +7,7 @@ export const metadata = {
   title: "Katalog — The Liquidator",
 };
 
-export const revalidate = 60; // ISR: odśwież co 60s
+export const revalidate = 60;
 
 async function ListingsGrid() {
   const listings = await getActiveListings();
@@ -33,13 +33,22 @@ async function ListingsGrid() {
 export default function CatalogPage() {
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Katalog
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Aktywne oferty kup teraz i aukcje na żywo
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100">
+              <Package size={16} className="text-gray-600" />
+            </div>
+            <h1 className="text-2xl font-black tracking-tight text-foreground">Katalog</h1>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Aktywne oferty kup teraz i aukcje na żywo
+          </p>
+        </div>
+        <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-100 px-3 py-1.5">
+          <TrendingDown size={13} className="text-amber-600" />
+          <span className="text-xs font-semibold text-amber-700">Ceny likwidacyjne</span>
+        </div>
       </div>
 
       <Suspense fallback={<CatalogSkeleton />}>
