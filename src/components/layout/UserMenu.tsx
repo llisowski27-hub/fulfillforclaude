@@ -23,16 +23,16 @@ export function UserMenu({ email }: { email: string }) {
     <div className="flex items-center gap-1">
       <Link
         href="/account/orders"
-        className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+        className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors font-medium"
         title="Moje konto"
       >
-        <User size={14} />
+        <User size={14} className="text-blue-600" />
         <span className="max-w-[120px] truncate">{short}</span>
       </Link>
       <button
         onClick={handleLogout}
         disabled={loading}
-        className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors disabled:opacity-50"
+        className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-red-50 hover:text-red-600 transition-colors disabled:opacity-50"
         title="Wyloguj"
       >
         <LogOut size={14} />

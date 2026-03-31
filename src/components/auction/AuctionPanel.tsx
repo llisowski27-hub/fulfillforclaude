@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Gavel, TrendingUp, TrendingDown, Minus, Loader2 } from "lucide-react";
+import { Gavel, TrendingUp, TrendingDown, Minus, Loader2, Flame, Lock } from "lucide-react";
 import type { AuctionDetail } from "@/types/catalog";
 
 // ─── helpers ─────────────────────────────────────────────────
@@ -38,6 +38,7 @@ function useCountdown(endTime: string) {
           ? `${h}:${pad(m)}:${pad(s)}`
           : `${pad(m)}:${pad(s)}`,
     isUrgent: ms > 0 && ms < 5 * 60 * 1000,
+    isCritical: ms > 0 && ms < 60 * 1000,
     isEnded: ms === 0,
   };
 }
@@ -48,26 +49,36 @@ type UserStatus = "leading" | "outbid" | "neutral";
 const STATUS = {
   leading: {
     icon: TrendingUp,
-    label: "Prowadzisz",
-    badge: "bg-emerald-100 text-emerald-700 border-emerald-200",
-    border: "border-emerald-400",
-    priceColor: "text-emerald-600",
+    label: "Prowadzisz!",
+    badge: "bg-bg-blue-100 text-blue-700 border-blue-300",
+    border: "border-blue-400",
+    glow: "shadow-blue-500/20",
+    priceColor: "from-blue-600 to-blue-400",
   },
   outbid: {
     icon: TrendingDown,
     label: "Przebity",
-    badge: "bg-red-100 text-red-700 border-red-200",
+    badge: "bg-red-100 text-red-700 border-red-300",
     border: "border-red-400",
-    priceColor: "text-red-500",
+    glow: "shadow-red-500/20",
+    priceColor: "from-red-500 to-red-400",
   },
   neutral: {
     icon: Minus,
     label: null,
     badge: "",
     border: "border-border",
-    priceColor: "text-foreground",
+    glow: "shadow-gray-200/60",
+    priceColor: "from-amber-500 to-orange-400",
   },
 } as const;
+
+const BUMP_CHIPS = [
+  { delta: 1,  label: "+1 zł",  style: "bg-gray-50 border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700" },
+  { delta: 5,  label: "+5 zł",  style: "bg-gray-50 border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700" },
+  { delta: 10, label: "+10 zł", style: "bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 hover:border-blue-400" },
+  { delta: 50, label: "+50 zł", style: "bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100 hover:border-amber-400 font-bold" },
+];
 
 // ─── component ───────────────────────────────────────────────
 export function AuctionPanel({
@@ -88,9 +99,8 @@ export function AuctionPanel({
 
   const [bidAmount, setBidAmount] = useState(minNext);
   const userEdited = useRef(false);
-  const { display, isUrgent, isEnded } = useCountdown(auction.end_time);
+  const { display, isUrgent, isCritical, isEnded } = useCountdown(auction.end_time);
 
-  // Keep bid input at least at minNext when price updates via realtime
   useEffect(() => {
     if (!userEdited.current) {
       setBidAmount(minNext);
@@ -114,22 +124,17 @@ export function AuctionPanel({
   }
 
   return (
-    <div
-      className={`rounded-2xl border-2 bg-card p-5 space-y-5 transition-colors ${cfg.border}`}
-    >
+    <div className={`rounded-2xl border-2 bg-card p-5 space-y-4 transition-all shadow-lg ${cfg.border} ${cfg.glow}`}>
+
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Gavel size={16} className="text-primary" />
-          <span className="text-sm font-semibold text-primary uppercase tracking-wide">
-            Aukcja live
-          </span>
-        </div>
+        <span className="badge-live">
+          <Gavel size={10} className="inline mr-0.5" />
+          Aukcja live
+        </span>
 
         {cfg.label && (
-          <span
-            className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${cfg.badge}`}
-          >
+          <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-bold ${cfg.badge}`}>
             <cfg.icon size={11} />
             {cfg.label}
           </span>
@@ -137,60 +142,60 @@ export function AuctionPanel({
       </div>
 
       {/* Price block */}
-      <div>
-        <p className="text-xs text-muted-foreground mb-1">
+      <div className="rounded-xl bg-gray-50 border border-gray-100 px-4 py-3.5">
+        <p className="text-xs text-muted-foreground mb-1 font-medium">
           {auction.bid_count > 0 ? "Aktualna cena" : "Cena wywoławcza"}
         </p>
-        <p className={`text-4xl font-bold tracking-tight ${cfg.priceColor}`}>
+        <p className={`text-4xl font-black tracking-tight bg-gradient-to-r ${cfg.priceColor} bg-clip-text text-transparent`}>
           {formatPLN(currentPrice)}
         </p>
         <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground">
-          <span>{auction.bid_count} ofert</span>
+          <span className="font-semibold text-blue-600">{auction.bid_count} ofert</span>
           <span>·</span>
-          <span>min. podbicie {formatPLN(auction.min_bid_increment)}</span>
+          <span>min. podbicie <span className="font-medium text-amber-600">{formatPLN(auction.min_bid_increment)}</span></span>
         </div>
       </div>
 
       {/* Countdown */}
       {!isEnded && hasStarted && (
-        <div
-          className={`flex items-center justify-between rounded-xl px-4 py-3 ${
-            isUrgent
+        <div className={`flex items-center justify-between rounded-xl px-4 py-3 transition-colors ${
+          isCritical
+            ? "bg-red-50 border-2 border-red-300"
+            : isUrgent
               ? "bg-red-50 border border-red-200"
-              : "bg-muted border border-border"
-          }`}
-        >
-          <span
-            className={`text-xs font-medium ${isUrgent ? "text-red-600" : "text-muted-foreground"}`}
-          >
-            Kończy się za
+              : "bg-gray-50 border border-gray-100"
+        }`}>
+          <span className={`text-xs font-semibold ${isCritical || isUrgent ? "text-red-600" : "text-muted-foreground"}`}>
+            {isCritical ? <><Flame size={11} className="inline mr-1" />Kończy się!</> : "Kończy się za"}
           </span>
-          <span
-            className={`text-xl font-bold tabular-nums ${isUrgent ? "text-red-600" : "text-foreground"}`}
-          >
+          <span className={`font-black tabular-nums ${
+            isCritical
+              ? "text-2xl text-red-600 animate-pulse"
+              : isUrgent
+                ? "text-xl text-red-500"
+                : "text-xl text-foreground"
+          }`}>
             {display}
           </span>
         </div>
       )}
 
       {isEnded && (
-        <div className="rounded-xl bg-muted border border-border px-4 py-3 text-center">
-          <span className="text-sm font-semibold text-muted-foreground">
-            Aukcja zakończona
-          </span>
+        <div className="rounded-xl bg-gray-50 border border-gray-200 px-4 py-3 text-center">
+          <span className="text-sm font-semibold text-muted-foreground">Aukcja zakończona</span>
         </div>
       )}
 
       {!hasStarted && !isEnded && (
-        <div className="rounded-xl bg-muted border border-border px-4 py-3">
-          <p className="text-xs text-muted-foreground">Rozpoczyna się</p>
-          <p className="text-sm font-semibold text-foreground">
+        <div className="rounded-xl bg-amber-50 border border-amber-100 px-4 py-3">
+          <p className="text-xs text-amber-600 font-medium">Rozpoczyna się</p>
+          <p className="text-sm font-bold text-amber-800">
             {new Date(auction.start_time).toLocaleString("pl-PL")}
           </p>
         </div>
       )}
 
-      {/* Bid input + quick bumps */}
+      {/* Bid input + chips */}
       {!isEnded && hasStarted && (
         <div className="space-y-2.5">
           {/* Input */}
@@ -205,54 +210,58 @@ export function AuctionPanel({
                 setBidAmount(Math.max(minNext, Number(e.target.value)));
               }}
               disabled={submitting}
-              className="w-full rounded-xl border border-border bg-background px-4 py-3 pr-12 text-base font-semibold text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all disabled:opacity-60"
+              className="w-full rounded-xl border-2 border-blue-200 bg-white px-4 py-3 pr-12 text-lg font-black text-foreground outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all disabled:opacity-60"
             />
-            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-blue-600">
               zł
             </span>
           </div>
 
-          {/* Quick bump buttons */}
-          <div className="grid grid-cols-4 gap-2">
-            {[1, 5, 10, 50].map((delta) => (
+          {/* Chips */}
+          <div className="grid grid-cols-4 gap-1.5">
+            {BUMP_CHIPS.map(({ delta, label, style }) => (
               <button
                 key={delta}
                 onClick={() => bump(delta)}
                 disabled={submitting}
-                className="rounded-lg border border-border bg-secondary py-2 text-sm font-medium text-foreground hover:bg-primary/10 hover:border-primary/40 hover:text-primary transition-colors disabled:opacity-50"
+                className={`rounded-xl border py-2 text-xs font-semibold transition-all active:scale-95 disabled:opacity-50 ${style}`}
               >
-                +{delta}
+                {label}
               </button>
             ))}
           </div>
 
-          {/* Submit — auth-aware */}
+          {/* Submit */}
           {!isAuthenticated ? (
             <Link
               href="/login"
-              className="w-full inline-flex items-center justify-center rounded-xl border border-border bg-secondary py-3.5 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-secondary py-3.5 text-sm font-semibold text-foreground hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-all"
             >
+              <Lock size={14} />
               Zaloguj się, aby licytować
             </Link>
           ) : (
             <button
               onClick={handleBid}
               disabled={submitting || bidAmount < minNext}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-bold text-primary-foreground shadow hover:opacity-90 active:scale-[0.98] disabled:opacity-50 transition-all"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl btn-win py-4 text-base font-black shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:scale-100 transition-all animate-glow"
             >
               {submitting ? (
                 <>
-                  <Loader2 size={15} className="animate-spin" />
+                  <Loader2 size={16} className="animate-spin" />
                   Składanie oferty...
                 </>
               ) : (
-                <>Licytuj {formatPLN(bidAmount)}</>
+                <>
+                  <Gavel size={16} />
+                  Licytuj {formatPLN(bidAmount)}
+                </>
               )}
             </button>
           )}
 
           {bidAmount < minNext && (
-            <p className="text-center text-xs text-destructive">
+            <p className="text-center text-xs text-destructive font-medium">
               Minimalna oferta: {formatPLN(minNext)}
             </p>
           )}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Flame, TrendingUp } from "lucide-react";
 import { CountdownBadge } from "./CountdownBadge";
 import type { ListingWithAuction } from "@/types/catalog";
 
@@ -10,6 +11,26 @@ function formatPrice(amount: number): string {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
+}
+
+function BidPopularity({ bidCount }: { bidCount: number }) {
+  const max = 20;
+  const pct = Math.min((bidCount / max) * 100, 100);
+  const hot = bidCount >= 5;
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex-1 h-1 rounded-full bg-gray-100 overflow-hidden">
+        <div
+          className={`h-full rounded-full transition-all duration-500 ${hot ? "bg-gradient-to-r from-amber-400 to-orange-500" : "bg-blue-400"}`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <span className={`text-xs font-semibold tabular-nums ${hot ? "text-amber-600" : "text-blue-600"}`}>
+        {hot && <Flame size={10} className="inline mr-0.5 mb-0.5" />}
+        {bidCount} ofert
+      </span>
+    </div>
+  );
 }
 
 export function ProductCard({ listing }: { listing: ListingWithAuction }) {
@@ -26,11 +47,20 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
     ? new Date(auctions.end_time).getTime() - Date.now()
     : null;
   const isUrgent = msLeft !== null && msLeft > 0 && msLeft < 60 * 60 * 1000;
+  const isCritical = msLeft !== null && msLeft > 0 && msLeft < 10 * 60 * 1000;
+  const bidCount = auctions?.bid_count ?? 0;
+  const isHot = isAuction && bidCount >= 5;
 
   return (
     <Link
       href={href}
-      className="group flex flex-col rounded-2xl bg-card border border-border overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-rose-500/10 hover:border-rose-200"
+      className={`group flex flex-col rounded-2xl bg-card border overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 ${
+        isAuction
+          ? isHot
+            ? "card-hot hover:shadow-amber-500/20 hover:shadow-xl"
+            : "border-blue-100 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/10"
+          : "border-border hover:shadow-xl hover:shadow-gray-200/80 hover:border-gray-300"
+      }`}
     >
       {/* Image */}
       <div className="relative aspect-[4/3] bg-muted overflow-hidden">
@@ -56,13 +86,11 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
         {/* Type badge */}
         <div className="absolute top-2.5 left-2.5">
           {isAuction ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-rose-600 to-orange-500 px-2.5 py-1 text-xs font-bold text-white shadow-md">
-              {isUrgent && (
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
-                </span>
-              )}
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 px-2.5 py-1 text-xs font-bold text-white shadow-md shadow-blue-500/30">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
+              </span>
               Aukcja
             </span>
           ) : (
@@ -71,6 +99,13 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
             </span>
           )}
         </div>
+
+        {/* Urgent banner */}
+        {isCritical && (
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-red-600 to-red-500 px-3 py-1 flex items-center justify-center gap-1.5">
+            <span className="animate-pulse text-white text-xs font-bold tracking-wide">⚡ KOŃCZY SIĘ!</span>
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -80,9 +115,24 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
         </h3>
 
         {/* Price */}
-        <p className="text-xl font-black bg-gradient-to-r from-rose-600 to-orange-500 bg-clip-text text-transparent tracking-tight">
-          {formatPrice(displayPrice)}
-        </p>
+        {isAuction ? (
+          <div className="flex items-baseline gap-1.5">
+            <p className="text-xl font-black bg-gradient-to-r from-amber-500 to-orange-400 bg-clip-text text-transparent tracking-tight">
+              {formatPrice(displayPrice)}
+            </p>
+            <span className="text-xs text-muted-foreground font-medium flex items-center gap-0.5">
+              <TrendingUp size={10} className="text-blue-500" />
+              akt. cena
+            </span>
+          </div>
+        ) : (
+          <p className="text-xl font-black text-foreground tracking-tight">
+            {formatPrice(displayPrice)}
+          </p>
+        )}
+
+        {/* Popularity bar (auctions only) */}
+        {isAuction && <BidPopularity bidCount={bidCount} />}
 
         {/* Metadata */}
         <div className="flex items-center justify-between">
@@ -90,11 +140,6 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
             <CountdownBadge endTime={auctions.end_time} />
           ) : (
             <span className="text-xs text-muted-foreground">{listing.category ?? ""}</span>
-          )}
-          {isAuction && auctions?.bid_count != null && (
-            <span className="text-xs text-muted-foreground tabular-nums">
-              {auctions.bid_count} ofert
-            </span>
           )}
         </div>
       </div>

@@ -5,8 +5,8 @@ import { CartProvider } from "@/components/cart/CartContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "The Liquidator — Marketplace",
-  description: "Marketplace z aukcjami w czasie rzeczywistym i systemem kup teraz.",
+  title: "Liqware — Platforma aukcyjna dla firm",
+  description: "Platforma aukcyjna i sprzedażowa do zarządzania nadwyżkami magazynowymi.",
 };
 
 export default function RootLayout({

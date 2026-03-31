@@ -10,12 +10,13 @@ export function CartNavIcon() {
   return (
     <Link
       href="/cart"
-      className="relative flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+      className="relative flex flex-col items-center gap-0.5 px-2.5 py-1.5 rounded-lg text-gray-600 hover:text-blue-700 hover:bg-blue-50 transition-colors"
+      title="Koszyk"
     >
-      <ShoppingCart size={16} />
-      Koszyk
+      <ShoppingCart size={20} strokeWidth={1.8} />
+      <span className="text-[10px] font-medium">Koszyk</span>
       {totalItems > 0 && (
-        <span className="absolute -top-0.5 right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+        <span className="absolute -top-0.5 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-blue-500 text-[9px] font-black text-white shadow">
           {totalItems > 99 ? "99+" : totalItems}
         </span>
       )}

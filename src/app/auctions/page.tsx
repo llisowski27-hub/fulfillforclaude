@@ -4,7 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import type { ListingWithAuction } from "@/types/catalog";
 
-export const metadata = { title: "Aukcje — The Liquidator" };
+export const metadata = { title: "Aukcje — Liqware" };
 export const revalidate = 30;
 
 async function AuctionsGrid() {
@@ -65,13 +65,19 @@ function AuctionsSkeleton() {
 export default function AuctionsPage() {
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Aukcje
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Licytuj w czasie rzeczywistym
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 border border-blue-100">
+              <Gavel size={16} className="text-blue-600" />
+            </div>
+            <h1 className="text-2xl font-black tracking-tight text-foreground">Aukcje</h1>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Licytuj w czasie rzeczywistym
+          </p>
+        </div>
+        <span className="badge-live text-sm px-3 py-1.5">Rynek otwarty</span>
       </div>
 
       <Suspense fallback={<AuctionsSkeleton />}>
