@@ -13,17 +13,17 @@ export default function AccountTabs() {
   const pathname = usePathname();
 
   return (
-    <nav className="mb-6 flex gap-1 rounded-xl bg-white p-1 shadow-sm">
+    <nav className="mb-6 flex gap-1 rounded-xl bg-card border border-border p-1 shadow-sm">
       {TABS.map(({ href, label, icon: Icon }) => {
         const active = pathname === href;
         return (
           <Link
             key={href}
             href={href}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
+            className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all ${
               active
-                ? "bg-emerald-50 text-emerald-700"
-                : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                ? "bg-gradient-to-r from-rose-600 to-orange-500 text-white shadow-md"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
             }`}
           >
             <Icon size={16} />

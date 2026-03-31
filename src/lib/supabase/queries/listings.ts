@@ -1,6 +1,9 @@
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { ListingDetail, ListingWithAuction } from "@/types/catalog";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function isUUID(s: string) { return UUID_RE.test(s); }
+
 export async function getActiveListings(): Promise<ListingWithAuction[]> {
   const supabase = await getSupabaseServerClient();
 
@@ -68,7 +71,11 @@ export async function getListingBySlug(
     )
     .eq("is_active", true)
     .eq("status", "active")
-    .or(`slug.eq.${slugOrId},id.eq.${slugOrId}`)
+    .or(
+      isUUID(slugOrId)
+        ? `slug.eq.${slugOrId},id.eq.${slugOrId}`
+        : `slug.eq.${slugOrId}`
+    )
     .single();
 
   if (error?.code === "PGRST116") return null; // no rows
