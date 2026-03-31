@@ -17,14 +17,6 @@ export default function HomePage() {
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px]" />
 
         <div className="relative max-w-2xl space-y-6">
-          {/* Live badge */}
-          <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/20 backdrop-blur-sm px-4 py-1.5 text-sm font-bold text-blue-300 border border-blue-500/30">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-400" />
-            </span>
-            Aukcje live — rynek otwarty
-          </div>
 
           <h1 className="text-5xl font-black tracking-tight text-white leading-[1.1]">
             Zarządzanie nadwyżkami
