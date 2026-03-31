@@ -7,17 +7,16 @@ export default function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-8 py-16 md:px-16 md:py-24 shadow-2xl shadow-gray-900/30">
-        {/* Subtle glow accents */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.15),transparent_60%)]" />
-        <div className="pointer-events-none absolute -bottom-12 -left-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(59,130,246,0.15),transparent_60%)]" />
+        <div className="pointer-events-none absolute -bottom-12 -left-12 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
         <div className="pointer-events-none absolute top-8 right-16 h-48 w-48 rounded-full bg-amber-500/10 blur-3xl" />
 
         <div className="relative max-w-2xl space-y-6">
           {/* Live badge */}
-          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/20 backdrop-blur-sm px-4 py-1.5 text-sm font-bold text-emerald-300 border border-emerald-500/30">
+          <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/20 backdrop-blur-sm px-4 py-1.5 text-sm font-bold text-blue-300 border border-blue-500/30">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-400" />
             </span>
             Aukcje live — rynek otwarty
           </div>
@@ -46,7 +45,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/auctions"
-              className="inline-flex items-center gap-2 rounded-xl btn-win px-6 py-3 text-sm font-bold shadow-lg shadow-emerald-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-xl btn-win px-6 py-3 text-sm font-bold shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <Gavel size={16} />
               Aktywne aukcje
@@ -56,8 +55,8 @@ export default function HomePage() {
 
         {/* Stats strip */}
         <div className="relative mt-10 flex flex-wrap gap-6 border-t border-white/10 pt-8">
-          <StatPill label="Aktywne aukcje" value="24" accent="emerald" />
-          <StatPill label="Licytujących online" value="138" accent="emerald" />
+          <StatPill label="Aktywne aukcje" value="24" accent="blue" />
+          <StatPill label="Licytujących online" value="138" accent="blue" />
           <StatPill label="Sprzedanych dziś" value="57" accent="amber" />
           <StatPill label="Śr. oszczędność" value="43%" accent="amber" />
         </div>
@@ -66,11 +65,11 @@ export default function HomePage() {
       {/* ── Feature cards ─────────────────────────────────────── */}
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <FeatureCard
-          icon={<Clock size={22} className="text-emerald-600" />}
-          iconBg="bg-emerald-50 border border-emerald-100"
+          icon={<Clock size={22} className="text-blue-600" />}
+          iconBg="bg-blue-50 border border-blue-100"
           title="Aukcje live"
           description="Licytuj w czasie rzeczywistym. Anti-sniping przedłuża aukcję przy ostatnich ofertach."
-          accent="emerald"
+          accent="blue"
         />
         <FeatureCard
           icon={<TrendingDown size={22} className="text-amber-600" />}
@@ -89,14 +88,14 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA strip ─────────────────────────────────────────── */}
-      <section className="rounded-2xl bg-emerald-600 px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-lg shadow-emerald-600/20">
+      <section className="rounded-2xl bg-blue-600 px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-lg shadow-blue-600/20">
         <div>
           <p className="text-white font-black text-xl">Gotowy na pierwszą licytację?</p>
-          <p className="text-emerald-100 text-sm mt-1">Zarejestruj się za darmo i licytuj od razu.</p>
+          <p className="text-blue-100 text-sm mt-1">Zarejestruj się za darmo i licytuj od razu.</p>
         </div>
         <Link
           href="/register"
-          className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-emerald-700 shadow transition-all hover:scale-[1.02] hover:shadow-md whitespace-nowrap"
+          className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-blue-700 shadow transition-all hover:scale-[1.02] hover:shadow-md whitespace-nowrap"
         >
           <Zap size={15} />
           Załóż konto
@@ -107,10 +106,10 @@ export default function HomePage() {
   );
 }
 
-function StatPill({ label, value, accent }: { label: string; value: string; accent: "emerald" | "amber" }) {
+function StatPill({ label, value, accent }: { label: string; value: string; accent: "blue" | "amber" }) {
   return (
     <div className="flex items-baseline gap-2">
-      <span className={`text-2xl font-black ${accent === "emerald" ? "text-emerald-400" : "text-amber-400"}`}>
+      <span className={`text-2xl font-black ${accent === "blue" ? "text-blue-400" : "text-amber-400"}`}>
         {value}
       </span>
       <span className="text-sm text-white/50">{label}</span>
@@ -125,10 +124,10 @@ function FeatureCard({
   iconBg: string;
   title: string;
   description: string;
-  accent: "emerald" | "amber" | "gray";
+  accent: "blue" | "amber" | "gray";
 }) {
-  const hoverBorder = accent === "emerald"
-    ? "hover:border-emerald-200 hover:shadow-emerald-500/10"
+  const hoverBorder = accent === "blue"
+    ? "hover:border-blue-200 hover:shadow-blue-500/10"
     : accent === "amber"
       ? "hover:border-amber-200 hover:shadow-amber-500/10"
       : "hover:border-gray-300";

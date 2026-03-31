@@ -32,7 +32,7 @@ export function SearchBar() {
   return (
     <form onSubmit={handleSubmit} className="flex items-stretch h-10 w-full max-w-2xl">
       {/* Input */}
-      <div className="relative flex flex-1 items-center border border-gray-300 rounded-l-xl bg-white overflow-hidden focus-within:border-emerald-400 focus-within:ring-2 focus-within:ring-emerald-400/20 transition-all">
+      <div className="relative flex flex-1 items-center border border-gray-300 rounded-l-xl bg-white overflow-hidden focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-400/20 transition-all">
         <input
           ref={inputRef}
           type="text"
@@ -69,8 +69,8 @@ export function SearchBar() {
                 key={cat}
                 type="button"
                 onClick={() => { setCategory(cat); setCatOpen(false); }}
-                className={`w-full text-left px-3 py-2 text-sm transition-colors hover:bg-emerald-50 hover:text-emerald-700 ${
-                  cat === category ? "text-emerald-700 font-semibold bg-emerald-50" : "text-foreground"
+                className={`w-full text-left px-3 py-2 text-sm transition-colors hover:bg-blue-50 hover:text-blue-700 ${
+                  cat === category ? "text-blue-700 font-semibold bg-blue-50" : "text-foreground"
                 }`}
               >
                 {cat}

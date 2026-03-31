@@ -21,11 +21,11 @@ function BidPopularity({ bidCount }: { bidCount: number }) {
     <div className="flex items-center gap-2">
       <div className="flex-1 h-1 rounded-full bg-gray-100 overflow-hidden">
         <div
-          className={`h-full rounded-full transition-all duration-500 ${hot ? "bg-gradient-to-r from-amber-400 to-orange-500" : "bg-emerald-400"}`}
+          className={`h-full rounded-full transition-all duration-500 ${hot ? "bg-gradient-to-r from-amber-400 to-orange-500" : "bg-blue-400"}`}
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className={`text-xs font-semibold tabular-nums ${hot ? "text-amber-600" : "text-emerald-600"}`}>
+      <span className={`text-xs font-semibold tabular-nums ${hot ? "text-amber-600" : "text-blue-600"}`}>
         {hot && <Flame size={10} className="inline mr-0.5 mb-0.5" />}
         {bidCount} ofert
       </span>
@@ -58,7 +58,7 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
         isAuction
           ? isHot
             ? "card-hot hover:shadow-amber-500/20 hover:shadow-xl"
-            : "border-emerald-100 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/10"
+            : "border-blue-100 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/10"
           : "border-border hover:shadow-xl hover:shadow-gray-200/80 hover:border-gray-300"
       }`}
     >
@@ -86,7 +86,7 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
         {/* Type badge */}
         <div className="absolute top-2.5 left-2.5">
           {isAuction ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-green-400 px-2.5 py-1 text-xs font-bold text-white shadow-md shadow-emerald-500/30">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 px-2.5 py-1 text-xs font-bold text-white shadow-md shadow-blue-500/30">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
@@ -121,7 +121,7 @@ export function ProductCard({ listing }: { listing: ListingWithAuction }) {
               {formatPrice(displayPrice)}
             </p>
             <span className="text-xs text-muted-foreground font-medium flex items-center gap-0.5">
-              <TrendingUp size={10} className="text-emerald-500" />
+              <TrendingUp size={10} className="text-blue-500" />
               akt. cena
             </span>
           </div>

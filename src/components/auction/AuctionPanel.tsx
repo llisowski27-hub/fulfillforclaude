@@ -50,10 +50,10 @@ const STATUS = {
   leading: {
     icon: TrendingUp,
     label: "Prowadzisz!",
-    badge: "bg-emerald-100 text-emerald-700 border-emerald-300",
-    border: "border-emerald-400",
-    glow: "shadow-emerald-500/20",
-    priceColor: "from-emerald-600 to-green-400",
+    badge: "bg-bg-blue-100 text-blue-700 border-blue-300",
+    border: "border-blue-400",
+    glow: "shadow-blue-500/20",
+    priceColor: "from-blue-600 to-blue-400",
   },
   outbid: {
     icon: TrendingDown,
@@ -74,9 +74,9 @@ const STATUS = {
 } as const;
 
 const BUMP_CHIPS = [
-  { delta: 1,  label: "+1 zł",  style: "bg-gray-50 border-gray-200 text-gray-600 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700" },
-  { delta: 5,  label: "+5 zł",  style: "bg-gray-50 border-gray-200 text-gray-600 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700" },
-  { delta: 10, label: "+10 zł", style: "bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-400" },
+  { delta: 1,  label: "+1 zł",  style: "bg-gray-50 border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700" },
+  { delta: 5,  label: "+5 zł",  style: "bg-gray-50 border-gray-200 text-gray-600 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700" },
+  { delta: 10, label: "+10 zł", style: "bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 hover:border-blue-400" },
   { delta: 50, label: "+50 zł", style: "bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100 hover:border-amber-400 font-bold" },
 ];
 
@@ -150,7 +150,7 @@ export function AuctionPanel({
           {formatPLN(currentPrice)}
         </p>
         <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground">
-          <span className="font-semibold text-emerald-600">{auction.bid_count} ofert</span>
+          <span className="font-semibold text-blue-600">{auction.bid_count} ofert</span>
           <span>·</span>
           <span>min. podbicie <span className="font-medium text-amber-600">{formatPLN(auction.min_bid_increment)}</span></span>
         </div>
@@ -210,9 +210,9 @@ export function AuctionPanel({
                 setBidAmount(Math.max(minNext, Number(e.target.value)));
               }}
               disabled={submitting}
-              className="w-full rounded-xl border-2 border-emerald-200 bg-white px-4 py-3 pr-12 text-lg font-black text-foreground outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all disabled:opacity-60"
+              className="w-full rounded-xl border-2 border-blue-200 bg-white px-4 py-3 pr-12 text-lg font-black text-foreground outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all disabled:opacity-60"
             />
-            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-emerald-600">
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-blue-600">
               zł
             </span>
           </div>
@@ -235,7 +235,7 @@ export function AuctionPanel({
           {!isAuthenticated ? (
             <Link
               href="/login"
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-secondary py-3.5 text-sm font-semibold text-foreground hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 transition-all"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-secondary py-3.5 text-sm font-semibold text-foreground hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-all"
             >
               <Lock size={14} />
               Zaloguj się, aby licytować
@@ -244,7 +244,7 @@ export function AuctionPanel({
             <button
               onClick={handleBid}
               disabled={submitting || bidAmount < minNext}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl btn-win py-4 text-base font-black shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:scale-100 transition-all animate-glow"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl btn-win py-4 text-base font-black shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:scale-100 transition-all animate-glow"
             >
               {submitting ? (
                 <>

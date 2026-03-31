@@ -68,8 +68,8 @@ export default function AuctionsPage() {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 border border-emerald-100">
-              <Gavel size={16} className="text-emerald-600" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 border border-blue-100">
+              <Gavel size={16} className="text-blue-600" />
             </div>
             <h1 className="text-2xl font-black tracking-tight text-foreground">Aukcje</h1>
           </div>

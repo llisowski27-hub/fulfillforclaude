@@ -31,11 +31,11 @@
     background: linear-gradient(135deg, #be123c 0%, #ea6c10 100%);
   }
   .btn-win {
-    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
     color: #fff;
   }
   .btn-win:hover {
-    background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
   }
   .btn-stake {
     background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
@@ -137,7 +137,7 @@
 
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 0 0 hsl(var(--win) / 0.0); }
-  50%       { box-shadow: 0 0 12px 3px hsl(var(--win) / 0.35); }
+  50%       { box-shadow: 0 0 14px 4px hsl(var(--win) / 0.30); }
 }
 
 @keyframes live-dot {
@@ -147,15 +147,15 @@
 
 @layer base {
   :root {
-    /* ── Tło i tekst — kremowy/nano-grey (marketplace style: Allegro / eBay) ── */
-    --background: 40 25% 97%;       /* warm cream */
+    /* ── Tło i tekst — nano-grey (marketplace style: Allegro / eBay) ── */
+    --background: 220 10% 96%;      /* cool nano-grey */
     --foreground: 221 39% 11%;      /* gray-900 */
 
     --card: 0 0% 100%;
     --card-foreground: 221 39% 11%;
 
-    /* ── Primary: emerald — "wygrywasz / licytuj" ── */
-    --primary: 142 71% 38%;         /* emerald-600 */
+    /* ── Primary: blue — akcja, licytacja ── */
+    --primary: 221 83% 53%;         /* blue-600 */
     --primary-foreground: 0 0% 100%;
 
     /* ── Secondary: szary neutral ── */
@@ -175,15 +175,15 @@
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 142 71% 38%;            /* emerald — focus ring */
+    --ring: 221 83% 53%;            /* blue — focus ring */
 
     --radius: 0.75rem;
 
     /* ── Tokeny semantyczne: hazard / prediction market ── */
-    --win:   142 71% 38%;           /* emerald-600 — zwycięstwo, prowadzenie */
+    --win:   221 83% 53%;           /* blue-600    — zwycięstwo, prowadzenie */
     --loss:    0 84% 53%;           /* red-500     — przegrana, outbid       */
     --stake:  38 92% 50%;           /* amber-500   — stawka, cena, złoto     */
-    --live:  142 71% 38%;           /* emerald     — wskaźnik LIVE           */
+    --live:  221 83% 53%;           /* blue        — wskaźnik LIVE           */
     --hot:    25 95% 53%;           /* orange-500  — "gorąca" aukcja         */
   }
 }

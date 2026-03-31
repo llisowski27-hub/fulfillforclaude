@@ -134,13 +134,13 @@ export function LiveAuctionPanel({
               key={bid.id}
               className={`flex items-center justify-between rounded-lg px-2.5 py-1.5 transition-colors ${
                 i === 0
-                  ? "animate-slide-down bg-emerald-50 border border-emerald-100"
+                  ? "animate-slide-down bg-blue-50 border border-blue-100"
                   : "hover:bg-gray-50"
               }`}
             >
               <div className="flex items-center gap-2">
                 {i === 0 && (
-                  <span className="text-xs font-bold text-emerald-600 uppercase tracking-wide">Nowa</span>
+                  <span className="text-xs font-bold text-blue-600 uppercase tracking-wide">Nowa</span>
                 )}
                 <span className="text-xs text-muted-foreground tabular-nums">
                   {new Date(bid.created_at).toLocaleTimeString("pl-PL", {
@@ -150,7 +150,7 @@ export function LiveAuctionPanel({
                   })}
                 </span>
               </div>
-              <span className={`text-sm font-black tabular-nums ${i === 0 ? "text-emerald-600" : "text-foreground"}`}>
+              <span className={`text-sm font-black tabular-nums ${i === 0 ? "text-blue-600" : "text-foreground"}`}>
                 {PLN(bid.amount)}
               </span>
             </div>
