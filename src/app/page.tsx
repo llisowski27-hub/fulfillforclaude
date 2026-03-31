@@ -63,22 +63,22 @@ export default function HomePage() {
         <FeatureCard
           icon={<Clock size={22} className="text-blue-600" />}
           iconBg="bg-blue-50 border border-blue-100"
-          title="Aukcje live"
-          description="Licytuj w czasie rzeczywistym. Anti-sniping przedłuża aukcję przy ostatnich ofertach."
+          title="Elastyczne Magazynowanie"
+          description="Płacisz tylko za wykorzystaną przestrzeń. Nie wynajmujesz pustych hal. Skalujesz miejsce w górę lub w dół zależnie od sezonu i ilości towaru na stanie."
           accent="blue"
         />
         <FeatureCard
           icon={<TrendingDown size={22} className="text-amber-600" />}
           iconBg="bg-amber-50 border border-amber-100"
-          title="Kup teraz"
-          description="Stałe ceny na towar z magazynów likwidacyjnych. Bez czekania na koniec aukcji."
+          title="Outsourcing Obsługi"
+          description="Kompletacja zamówień bez Twojego udziału. Odbieramy dostawy, kategoryzujemy towar i pakujemy paczki zgodnie z Twoim standardem."
           accent="amber"
         />
         <FeatureCard
           icon={<ShieldCheck size={22} className="text-gray-600" />}
           iconBg="bg-gray-50 border border-gray-200"
-          title="Gwarantowana realizacja"
-          description="Każda transakcja potwierdzana w sekundach. Zamówienie trafia do realizacji od razu."
+          title='Logistyka "Pay-as-you-go"'
+          description="Model rozliczeniowy oparty na efekcie: stała stawka za operację. Twoje koszty logistyczne rosną tylko wtedy, gdy rośnie Twój zysk."
           accent="gray"
         />
       </section>
