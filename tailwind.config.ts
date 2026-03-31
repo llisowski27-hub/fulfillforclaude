@@ -42,6 +42,26 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        /* ── Tokeny semantyczne dostępne jako klasy Tailwind ── */
+        win: {
+          DEFAULT: "hsl(var(--win))",
+          subtle: "hsl(var(--win) / 0.12)",
+          border: "hsl(var(--win) / 0.35)",
+        },
+        loss: {
+          DEFAULT: "hsl(var(--loss))",
+          subtle: "hsl(var(--loss) / 0.10)",
+          border: "hsl(var(--loss) / 0.35)",
+        },
+        stake: {
+          DEFAULT: "hsl(var(--stake))",
+          subtle: "hsl(var(--stake) / 0.12)",
+          border: "hsl(var(--stake) / 0.35)",
+        },
+        hot: {
+          DEFAULT: "hsl(var(--hot))",
+          subtle: "hsl(var(--hot) / 0.10)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

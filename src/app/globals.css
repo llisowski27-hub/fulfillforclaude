@@ -3,29 +3,125 @@
 @tailwind utilities;
 
 @layer utilities {
+  /* ── Animacje cen / statusów ── */
   .animate-flash-price {
     animation: flash-price 0.8s ease-out;
+  }
+  .animate-flash-win {
+    animation: flash-win 0.9s ease-out;
+  }
+  .animate-flash-loss {
+    animation: flash-loss 0.9s ease-out;
   }
   .animate-slide-down {
     animation: slide-down 0.25s ease-out;
   }
+  .animate-ticker {
+    animation: ticker 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-glow {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  /* ── Przyciski akcji ── */
   .btn-gradient {
     background: linear-gradient(135deg, #e11d48 0%, #f97316 100%);
   }
   .btn-gradient:hover {
     background: linear-gradient(135deg, #be123c 0%, #ea6c10 100%);
   }
+  .btn-win {
+    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+    color: #fff;
+  }
+  .btn-win:hover {
+    background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+  }
+  .btn-stake {
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    color: #fff;
+  }
+  .btn-stake:hover {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  }
+
+  /* ── Tekst semantyczny ── */
   .text-gradient {
     background: linear-gradient(135deg, #e11d48 0%, #f97316 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  .text-win {
+    color: hsl(var(--win));
+  }
+  .text-loss {
+    color: hsl(var(--loss));
+  }
+  .text-stake {
+    color: hsl(var(--stake));
+  }
+
+  /* ── Badge LIVE ── */
+  .badge-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: hsl(var(--win) / 0.12);
+    color: hsl(var(--win));
+    border: 1px solid hsl(var(--win) / 0.35);
+    border-radius: 9999px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .badge-live::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: hsl(var(--win));
+    animation: live-dot 1.2s ease-in-out infinite;
+  }
+
+  /* ── Karta "gorącej" aukcji ── */
+  .card-hot {
+    border-color: hsl(var(--stake) / 0.5) !important;
+    box-shadow: 0 0 0 1px hsl(var(--stake) / 0.2), 0 4px 16px hsl(var(--stake) / 0.12);
+  }
+
+  /* ── Karta wygrywającej aukcji ── */
+  .card-winning {
+    border-color: hsl(var(--win) / 0.5) !important;
+    box-shadow: 0 0 0 1px hsl(var(--win) / 0.2), 0 4px 16px hsl(var(--win) / 0.1);
+  }
+
+  /* ── Karta przegranej / outbid ── */
+  .card-loss {
+    border-color: hsl(var(--loss) / 0.45) !important;
+    box-shadow: 0 0 0 1px hsl(var(--loss) / 0.15), 0 4px 16px hsl(var(--loss) / 0.08);
+  }
 }
 
+/* ── Keyframes ── */
 @keyframes flash-price {
   0%   { background-color: transparent; }
-  25%  { background-color: rgb(225 29 72 / 0.10); border-radius: 0.5rem; }
+  25%  { background-color: hsl(var(--stake) / 0.15); border-radius: 0.5rem; }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-win {
+  0%   { background-color: transparent; }
+  20%  { background-color: hsl(var(--win) / 0.18); border-radius: 0.5rem; }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-loss {
+  0%   { background-color: transparent; }
+  20%  { background-color: hsl(var(--loss) / 0.15); border-radius: 0.5rem; }
   100% { background-color: transparent; }
 }
 
@@ -34,35 +130,61 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes ticker {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--win) / 0.0); }
+  50%       { box-shadow: 0 0 12px 3px hsl(var(--win) / 0.35); }
+}
+
+@keyframes live-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
 @layer base {
   :root {
-    /* ── Option B: Energetyczny (white + rose-600/orange-500) ── */
+    /* ── Tło i tekst — jasne (marketplace style: Allegro / eBay) ── */
     --background: 210 20% 98%;      /* gray-50  */
     --foreground: 221 39% 11%;      /* gray-900 */
 
-    --card: 0 0% 100%;              /* white    */
+    --card: 0 0% 100%;
     --card-foreground: 221 39% 11%;
 
-    --primary: 347 77% 50%;         /* rose-600 */
+    /* ── Primary: emerald — "wygrywasz / licytuj" ── */
+    --primary: 142 71% 38%;         /* emerald-600 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;       /* gray-100 */
+    /* ── Secondary: szary neutral ── */
+    --secondary: 220 14% 96%;
     --secondary-foreground: 221 39% 11%;
 
-    --muted: 220 14% 96%;           /* gray-100 */
-    --muted-foreground: 220 9% 46%; /* gray-500 */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 347 77% 50%;
-    --accent-foreground: 0 0% 100%;
+    /* ── Accent: amber/gold — stawki, ceny, wyróżnienia ── */
+    --accent: 38 92% 50%;           /* amber-500 */
+    --accent-foreground: 221 39% 11%;
 
-    --destructive: 0 72% 51%;
+    /* ── Destructive: czerwony — outbid, pilne, strata ── */
+    --destructive: 0 84% 53%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;          /* gray-200 */
+    --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 347 77% 50%;            /* rose-600 */
+    --ring: 142 71% 38%;            /* emerald — focus ring */
 
     --radius: 0.75rem;
+
+    /* ── Tokeny semantyczne: hazard / prediction market ── */
+    --win:   142 71% 38%;           /* emerald-600 — zwycięstwo, prowadzenie */
+    --loss:    0 84% 53%;           /* red-500     — przegrana, outbid       */
+    --stake:  38 92% 50%;           /* amber-500   — stawka, cena, złoto     */
+    --live:  142 71% 38%;           /* emerald     — wskaźnik LIVE           */
+    --hot:    25 95% 53%;           /* orange-500  — "gorąca" aukcja         */
   }
 }
 
