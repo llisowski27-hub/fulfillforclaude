@@ -4,7 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import type { ListingWithAuction } from "@/types/catalog";
 
-export const metadata = { title: "Aukcje — The Liquidator" };
+export const metadata = { title: "Aukcje — Liqware" };
 export const revalidate = 30;
 
 async function AuctionsGrid() {

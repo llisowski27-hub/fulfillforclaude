@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
 import AccountTabs from "@/components/account/AccountTabs";
 
-export const metadata = { title: "Moje konto — The Liquidator" };
+export const metadata = { title: "Moje konto — Liqware" };
 
 export default async function AccountLayout({
   children,

@@ -22,16 +22,15 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-5xl font-black tracking-tight text-white leading-[1.1]">
-            Likwidacja magazynów.
+            Zarządzanie nadwyżkami
             <br />
             <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-              Ceny nie do pobicia.
+              magazynowymi.
             </span>
           </h1>
 
           <p className="text-lg text-white/70 leading-relaxed max-w-lg">
-            Marketplace z aukcjami na żywo i wyprzedażami stałocenowymi.
-            Części samochodowe, elektronika, towar po leasingach.
+            Platforma aukcyjna i sprzedażowa dla firm.
           </p>
 
           <div className="flex flex-wrap gap-3 pt-2">

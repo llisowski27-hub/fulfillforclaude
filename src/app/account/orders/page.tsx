@@ -2,7 +2,7 @@ import { getUserOrders } from "@/lib/supabase/queries/account";
 import { ShoppingBag, Package } from "lucide-react";
 import Link from "next/link";
 
-export const metadata = { title: "Moje zamówienia — The Liquidator" };
+export const metadata = { title: "Moje zamówienia — Liqware" };
 
 const STATUS_LABEL: Record<string, string> = {
   pending: "Oczekuje",

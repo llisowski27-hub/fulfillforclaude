@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap, Bell } from "lucide-react";
+import { Bell } from "lucide-react";
 import { CartNavIcon } from "@/components/cart/CartNavIcon";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { SearchBar } from "@/components/layout/SearchBar";
@@ -10,29 +10,26 @@ export default async function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm border-b border-gray-200">
-
-      {/* ── Main bar ── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center gap-4">
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group shrink-0">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/30 transition-transform group-hover:scale-105">
-              <Zap size={16} strokeWidth={2.5} />
-            </div>
-            <span className="hidden lg:block text-base font-black tracking-tight text-foreground">
-              The <span className="bg-gradient-to-r from-amber-500 to-orange-400 bg-clip-text text-transparent">Liquidator</span>
-            </span>
+          {/* Logo — LIQWARE wordmark */}
+          <Link href="/" className="shrink-0 flex items-center group">
+            <img
+              src="/liqware.svg"
+              alt="Liqware"
+              className="h-7 w-auto transition-opacity group-hover:opacity-75"
+              style={{ color: "#111" }}
+            />
           </Link>
 
-          {/* Search bar — grows to fill space */}
+          {/* Search bar */}
           <div className="flex-1 hidden md:block">
             <SearchBar />
           </div>
 
           {/* Right icons */}
           <div className="flex items-center gap-1 shrink-0">
-            {/* Notifications */}
             <button
               className="relative flex flex-col items-center gap-0.5 px-2.5 py-1.5 rounded-lg text-gray-600 hover:text-blue-700 hover:bg-blue-50 transition-colors"
               title="Powiadomienia"
@@ -44,13 +41,10 @@ export default async function Navbar() {
               </span>
             </button>
 
-            {/* Cart */}
             <CartNavIcon />
 
-            {/* Divider */}
             <div className="w-px h-8 bg-gray-200 mx-1" />
 
-            {/* Auth */}
             {user ? (
               <UserMenu email={user.email!} />
             ) : (
@@ -73,7 +67,6 @@ export default async function Navbar() {
 
         </div>
       </div>
-
     </header>
   );
 }

@@ -4,7 +4,7 @@ import { getActiveListings } from "@/lib/supabase/queries/listings";
 import { ProductCard } from "@/components/catalog/ProductCard";
 
 export const metadata = {
-  title: "Katalog — The Liquidator",
+  title: "Katalog — Liqware",
 };
 
 export const revalidate = 60;

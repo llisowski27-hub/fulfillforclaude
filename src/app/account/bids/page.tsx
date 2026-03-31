@@ -3,7 +3,7 @@ import { Gavel, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-export const metadata = { title: "Moje oferty — The Liquidator" };
+export const metadata = { title: "Moje oferty — Liqware" };
 
 function formatPrice(amount: number) {
   return new Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN" }).format(amount);

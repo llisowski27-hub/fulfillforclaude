@@ -14,8 +14,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const listing = await getListingBySlug(slug);
-  if (!listing) return { title: "Nie znaleziono — The Liquidator" };
-  return { title: `${listing.title} — The Liquidator` };
+  if (!listing) return { title: "Nie znaleziono — Liqware" };
+  return { title: `${listing.title} — Liqware` };
 }
 
 function formatPrice(amount: number) {

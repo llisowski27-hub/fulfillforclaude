@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 
-export const metadata = { title: "Zamówienie złożone — The Liquidator" };
+export const metadata = { title: "Zamówienie złożone — Liqware" };
 
 export default async function OrderSuccessPage({
   params,
