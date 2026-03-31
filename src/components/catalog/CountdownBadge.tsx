@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Clock } from "lucide-react";
+import { Clock, Flame } from "lucide-react";
 
 function formatCountdown(endTime: string): string {
   const diff = new Date(endTime).getTime() - Date.now();
@@ -26,15 +26,30 @@ export function CountdownBadge({ endTime }: { endTime: string }) {
     return () => clearInterval(id);
   }, [endTime]);
 
-  const isUrgent =
-    new Date(endTime).getTime() - Date.now() < 10 * 60 * 1000; // < 10 min
+  const msLeft = new Date(endTime).getTime() - Date.now();
+  const isUrgent = msLeft < 60 * 60 * 1000 && msLeft > 0;
+  const isCritical = msLeft < 60 * 1000 && msLeft > 0;
+
+  if (isCritical) {
+    return (
+      <span className="inline-flex items-center gap-1 text-xs font-bold text-red-600 animate-pulse">
+        <Flame size={11} />
+        {text}
+      </span>
+    );
+  }
+
+  if (isUrgent) {
+    return (
+      <span className="inline-flex items-center gap-1 text-xs font-semibold text-red-500">
+        <Flame size={11} />
+        {text}
+      </span>
+    );
+  }
 
   return (
-    <span
-      className={`inline-flex items-center gap-1 text-xs font-medium ${
-        isUrgent ? "text-red-500" : "text-muted-foreground"
-      }`}
-    >
+    <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600">
       <Clock size={11} />
       {text}
     </span>
