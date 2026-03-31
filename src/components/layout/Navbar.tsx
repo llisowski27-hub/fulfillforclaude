@@ -87,7 +87,7 @@ export default async function Navbar() {
       {/* ── Category bar ── */}
       <div className="border-b border-gray-200 bg-white hidden md:block">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center overflow-x-auto scrollbar-hide">
+          <nav className="flex items-center">
             {CATEGORY_NAV.map((cat) => (
               <Link
                 key={cat.href}
