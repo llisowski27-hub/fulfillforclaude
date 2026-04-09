@@ -5,8 +5,8 @@ import { CartProvider } from "@/components/cart/CartContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Liqware — Platforma aukcyjna dla firm",
-  description: "Platforma aukcyjna i sprzedażowa do zarządzania nadwyżkami magazynowymi.",
+  title: "Liqware — AI Marketing dla lokalnych firm",
+  description: "Generujemy leady dla polskich lokalnych firm przez Meta i Google Ads. Analiza reklam oparta o AI, stała miesięczna opłata, mierzalne efekty.",
 };
 
 export default function RootLayout({
