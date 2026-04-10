@@ -2,202 +2,221 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  /* ── Animacje cen / statusów ── */
-  .animate-flash-price {
-    animation: flash-price 0.8s ease-out;
-  }
-  .animate-flash-win {
-    animation: flash-win 0.9s ease-out;
-  }
-  .animate-flash-loss {
-    animation: flash-loss 0.9s ease-out;
-  }
-  .animate-slide-down {
-    animation: slide-down 0.25s ease-out;
-  }
-  .animate-ticker {
-    animation: ticker 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .animate-glow {
-    animation: glow-pulse 2s ease-in-out infinite;
-  }
-
-  /* ── Przyciski akcji ── */
-  .btn-gradient {
-    background: linear-gradient(135deg, #e11d48 0%, #f97316 100%);
-  }
-  .btn-gradient:hover {
-    background: linear-gradient(135deg, #be123c 0%, #ea6c10 100%);
-  }
-  .btn-win {
-    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
-    color: #fff;
-  }
-  .btn-win:hover {
-    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
-  }
-  .btn-stake {
-    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-    color: #fff;
-  }
-  .btn-stake:hover {
-    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
-  }
-
-  /* ── Tekst semantyczny ── */
-  .text-gradient {
-    background: linear-gradient(135deg, #e11d48 0%, #f97316 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .text-win {
-    color: hsl(var(--win));
-  }
-  .text-loss {
-    color: hsl(var(--loss));
-  }
-  .text-stake {
-    color: hsl(var(--stake));
-  }
-
-  /* ── Badge LIVE ── */
-  .badge-live {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    background: hsl(var(--win) / 0.12);
-    color: hsl(var(--win));
-    border: 1px solid hsl(var(--win) / 0.35);
-    border-radius: 9999px;
-    padding: 0.15rem 0.55rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .badge-live::before {
-    content: "";
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: hsl(var(--win));
-    animation: live-dot 1.2s ease-in-out infinite;
-  }
-
-  /* ── Karta "gorącej" aukcji ── */
-  .card-hot {
-    border-color: hsl(var(--stake) / 0.5) !important;
-    box-shadow: 0 0 0 1px hsl(var(--stake) / 0.2), 0 4px 16px hsl(var(--stake) / 0.12);
-  }
-
-  /* ── Karta wygrywającej aukcji ── */
-  .card-winning {
-    border-color: hsl(var(--win) / 0.5) !important;
-    box-shadow: 0 0 0 1px hsl(var(--win) / 0.2), 0 4px 16px hsl(var(--win) / 0.1);
-  }
-
-  /* ── Karta przegranej / outbid ── */
-  .card-loss {
-    border-color: hsl(var(--loss) / 0.45) !important;
-    box-shadow: 0 0 0 1px hsl(var(--loss) / 0.15), 0 4px 16px hsl(var(--loss) / 0.08);
-  }
-}
-
-/* ── Keyframes ── */
-@keyframes flash-price {
-  0%   { background-color: transparent; }
-  25%  { background-color: hsl(var(--stake) / 0.15); border-radius: 0.5rem; }
-  100% { background-color: transparent; }
-}
-
-@keyframes flash-win {
-  0%   { background-color: transparent; }
-  20%  { background-color: hsl(var(--win) / 0.18); border-radius: 0.5rem; }
-  100% { background-color: transparent; }
-}
-
-@keyframes flash-loss {
-  0%   { background-color: transparent; }
-  20%  { background-color: hsl(var(--loss) / 0.15); border-radius: 0.5rem; }
-  100% { background-color: transparent; }
-}
-
-@keyframes slide-down {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes ticker {
-  from { opacity: 0; transform: translateY(8px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--win) / 0.0); }
-  50%       { box-shadow: 0 0 14px 4px hsl(var(--win) / 0.30); }
-}
-
-@keyframes live-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.7); }
-}
-
 @layer base {
   :root {
-    /* ── Tło i tekst — nano-grey (marketplace style: Allegro / eBay) ── */
-    --background: 220 10% 96%;      /* cool nano-grey */
-    --foreground: 221 39% 11%;      /* gray-900 */
+    --background: 223 80% 4%;
+    --foreground: 210 40% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 221 39% 11%;
+    --card: 223 72% 7%;
+    --card-foreground: 210 40% 95%;
 
-    /* ── Primary: blue — akcja, licytacja ── */
-    --primary: 221 83% 53%;         /* blue-600 */
+    --popover: 223 72% 7%;
+    --popover-foreground: 210 40% 95%;
+
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    /* ── Secondary: szary neutral ── */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 221 39% 11%;
+    --secondary: 220 40% 13%;
+    --secondary-foreground: 210 40% 85%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 220 40% 13%;
+    --muted-foreground: 215 16% 52%;
 
-    /* ── Accent: amber/gold — stawki, ceny, wyróżnienia ── */
-    --accent: 38 92% 50%;           /* amber-500 */
-    --accent-foreground: 221 39% 11%;
+    --accent: 263 70% 62%;
+    --accent-foreground: 0 0% 100%;
 
-    /* ── Destructive: czerwony — outbid, pilne, strata ── */
-    --destructive: 0 84% 53%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;            /* blue — focus ring */
-
+    --border: 217 32% 14%;
+    --input: 217 32% 14%;
+    --ring: 217 91% 60%;
     --radius: 0.75rem;
 
-    /* ── Tokeny semantyczne: hazard / prediction market ── */
-    --win:   221 83% 53%;           /* blue-600    — zwycięstwo, prowadzenie */
-    --loss:    0 84% 53%;           /* red-500     — przegrana, outbid       */
-    --stake:  38 92% 50%;           /* amber-500   — stawka, cena, złoto     */
-    --live:  221 83% 53%;           /* blue        — wskaźnik LIVE           */
-    --hot:    25 95% 53%;           /* orange-500  — "gorąca" aukcja         */
+    /* Custom brand tokens */
+    --cyan: 189 94% 43%;
+    --violet: 263 70% 62%;
+    --blue: 217 91% 60%;
   }
 }
 
 @layer base {
-  :root {
-    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+  * {
+    @apply border-border;
+    box-sizing: border-box;
   }
 
-  * { @apply border-border; }
+  html {
+    scroll-behavior: smooth;
+  }
 
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+@layer utilities {
+  /* ── Text gradients ───────────────────────────────────── */
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #60a5fa, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-cyber {
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-violet {
+    background: linear-gradient(135deg, #a78bfa, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Glow effects ─────────────────────────────────────── */
+  .glow-blue {
+    box-shadow: 0 0 24px rgba(59, 130, 246, 0.25),
+                0 0 48px rgba(59, 130, 246, 0.1);
+  }
+  .glow-blue-sm {
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+  }
+  .glow-violet {
+    box-shadow: 0 0 24px rgba(124, 58, 237, 0.25),
+                0 0 48px rgba(124, 58, 237, 0.1);
+  }
+  .glow-cyan {
+    box-shadow: 0 0 24px rgba(6, 182, 212, 0.25),
+                0 0 48px rgba(6, 182, 212, 0.1);
+  }
+  .glow-card:hover {
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2),
+                0 8px 32px rgba(59, 130, 246, 0.12),
+                0 0 48px rgba(59, 130, 246, 0.06);
+  }
+
+  /* ── Glassmorphism ────────────────────────────────────── */
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .glass-blue {
+    background: rgba(59, 130, 246, 0.07);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+  }
+
+  .glass-card {
+    background: rgba(10, 20, 50, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── Gradient border ──────────────────────────────────── */
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.6),
+      rgba(124, 58, 237, 0.3),
+      rgba(6, 182, 212, 0.2)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* ── Grid overlay ─────────────────────────────────────── */
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ── Noise texture ────────────────────────────────────── */
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* ── Pulse dot ────────────────────────────────────────── */
+  .dot-live {
+    animation: live-dot 1.5s ease-in-out infinite;
+  }
+
+  /* ── Animated glow ring ───────────────────────────────── */
+  .animate-glow-ring {
+    animation: glow-ring 3s ease-in-out infinite;
+  }
+}
+
+/* ── Keyframes ────────────────────────────────────────── */
+@keyframes live-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.65); }
+}
+
+@keyframes glow-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+  50% { box-shadow: 0 0 16px 4px rgba(59, 130, 246, 0.3); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-draw {
+  stroke-dasharray: 1000;
+  animation: draw-line 2s ease-out 0.5s forwards;
+  stroke-dashoffset: 1000;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
