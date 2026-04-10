@@ -40,7 +40,7 @@ export default function Hero() {
             </div>
 
             {/* Sub */}
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
+            <p className="text-lg text-slate-300 leading-relaxed max-w-lg">
               We run AI-optimised Meta & Google Ads for local Polish businesses —
               dentists, aesthetic clinics, renovation firms. Fixed monthly fee.
               No commissions. Just leads.
@@ -72,7 +72,7 @@ export default function Hero() {
               ].map((s) => (
                 <div key={s.label} className="flex items-baseline gap-1.5">
                   <span className="text-xl font-black text-white">{s.value}</span>
-                  <span className="text-xs text-muted-foreground">{s.label}</span>
+                  <span className="text-xs text-slate-400">{s.label}</span>
                 </div>
               ))}
             </div>

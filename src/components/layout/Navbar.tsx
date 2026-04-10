@@ -41,7 +41,7 @@ export default async function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                className="flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
               >
                 {link.icon}
                 {link.label}
@@ -66,7 +66,7 @@ export default async function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all"
+                  className="hidden sm:block text-sm font-medium text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all"
                 >
                   Sign in
                 </Link>
