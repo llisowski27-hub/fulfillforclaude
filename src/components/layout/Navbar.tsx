@@ -5,10 +5,10 @@ import { getUser } from "@/lib/auth";
 import { UserMenu } from "@/components/layout/UserMenu";
 
 const NAV_LINKS = [
-  { label: "How it works", href: "/#jak-dzialamy" },
-  { label: "Services", href: "/#uslugi" },
-  { label: "Results", href: "/#efekty" },
-  { label: "Ad Analyzer", href: "/analiza", icon: <BarChart2 size={13} /> },
+  { label: "Ścieżki", href: "/#program" },
+  { label: "Jak pracujemy", href: "/#jak-dzialamy" },
+  { label: "Dlaczego my", href: "/#efekty" },
+  { label: "Analiza reklam", href: "/analiza", icon: <BarChart2 size={13} /> },
 ];
 
 export default async function Navbar() {
@@ -31,7 +31,7 @@ export default async function Navbar() {
               Liqware
             </span>
             <span className="hidden sm:inline-block text-[10px] font-bold text-blue-400 border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 rounded-full tracking-wider uppercase">
-              AI Ads
+              Kurs + Audyt
             </span>
           </Link>
 
@@ -55,10 +55,10 @@ export default async function Navbar() {
               <>
                 <Link
                   href="/analiza"
-                  className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all"
+                  className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all"
                 >
                   <BarChart2 size={14} />
-                  My Analyses
+                  Moje analizy
                 </Link>
                 <UserMenu email={user.email!} />
               </>
@@ -68,13 +68,13 @@ export default async function Navbar() {
                   href="/login"
                   className="hidden sm:block text-sm font-medium text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all"
                 >
-                  Sign in
+                  Zaloguj się
                 </Link>
                 <Button asChild size="default" variant="primary">
-                  <Link href="/konsultacja">
+                  <Link href="/#zapis">
                     <Phone size={13} />
-                    <span className="hidden sm:inline">Free Strategy Call</span>
-                    <span className="sm:hidden">Call</span>
+                    <span className="hidden sm:inline">Umów rozmowę</span>
+                    <span className="sm:hidden">Rozmowa</span>
                   </Link>
                 </Button>
               </>

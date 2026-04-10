@@ -19,11 +19,12 @@ import {
 import { submitLeadAction, leadSchema, type LeadFormValues } from "@/app/actions/lead";
 
 const BUDGETS = [
-  "I don't know yet",
-  "under 1,000 zł / mo",
-  "1,000–3,000 zł / mo",
-  "3,000–10,000 zł / mo",
-  "10,000+ zł / mo",
+  "Nie wiem jeszcze",
+  "Chcę się uczyć sam (kurs)",
+  "Mam już agencję — chcę audyt",
+  "Wydaję do 1 000 zł / mies.",
+  "Wydaję 1 000–3 000 zł / mies.",
+  "Wydaję 3 000+ zł / mies.",
 ];
 
 export default function LeadForm() {
@@ -60,21 +61,22 @@ export default function LeadForm() {
           </div>
         </div>
         <div className="space-y-2">
-          <h3 className="text-2xl font-black text-white">You're in.</h3>
+          <h3 className="text-2xl font-black text-white">Zapisane.</h3>
           <p className="text-muted-foreground max-w-sm leading-relaxed">
-            I'll reach out within 24 hours to schedule the call. Expect a
-            short prep email so we make the most of 15 minutes.
+            Odezwę się w ciągu 24 godzin żeby ustalić termin rozmowy.
+            Dostaniesz też krótki mail z pytaniami, żeby 15 minut było
+            maksymalnie konkretne.
           </p>
         </div>
         <div className="glass-blue rounded-xl px-6 py-4 text-left space-y-2.5 max-w-sm w-full">
           <p className="text-xs font-bold text-blue-300 uppercase tracking-wider">
-            What to expect on the call
+            Co ustalimy na rozmowie
           </p>
           {[
-            "Audit of your current ad setup (or lack thereof)",
-            "Concrete channel + budget recommendation",
-            "Estimated CPL for your market & city",
-            "Your questions answered — no sales pressure",
+            "Która ścieżka ma dla Ciebie sens — kurs czy audyt",
+            "Konkretny plan działania dla Twojej branży",
+            "Realistyczny koszt pozyskania klienta w Twoim mieście",
+            "Odpowiedzi na Twoje pytania — zero sprzedaży",
           ].map((item) => (
             <div key={item} className="flex items-start gap-2">
               <CheckCircle size={13} className="text-blue-400 mt-0.5 shrink-0" />
@@ -91,7 +93,7 @@ export default function LeadForm() {
       {/* Name + Email */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label htmlFor="name">Your name *</Label>
+          <Label htmlFor="name">Imię *</Label>
           <Input
             id="name"
             placeholder="Jan Kowalski"
@@ -125,10 +127,10 @@ export default function LeadForm() {
 
       {/* Company */}
       <div className="space-y-1.5">
-        <Label htmlFor="company">Business name *</Label>
+        <Label htmlFor="company">Nazwa firmy *</Label>
         <Input
           id="company"
-          placeholder="e.g. Dentysta Kowalski Warszawa"
+          placeholder="np. Dentysta Kowalski Warszawa"
           aria-invalid={!!errors.company}
           {...register("company")}
         />
@@ -142,14 +144,14 @@ export default function LeadForm() {
 
       {/* Budget */}
       <div className="space-y-1.5">
-        <Label>Monthly ad budget *</Label>
+        <Label>Twoja sytuacja *</Label>
         <Select
           onValueChange={(val) =>
             setValue("budget", val, { shouldValidate: true })
           }
         >
           <SelectTrigger aria-invalid={!!errors.budget}>
-            <SelectValue placeholder="Select a range..." />
+            <SelectValue placeholder="Wybierz..." />
           </SelectTrigger>
           <SelectContent>
             {BUDGETS.map((b) => (
@@ -170,12 +172,12 @@ export default function LeadForm() {
       {/* Message */}
       <div className="space-y-1.5">
         <Label htmlFor="message">
-          Anything to add?{" "}
-          <span className="text-muted-foreground">(optional)</span>
+          Coś jeszcze?{" "}
+          <span className="text-muted-foreground">(opcjonalnie)</span>
         </Label>
         <Textarea
           id="message"
-          placeholder="e.g. We're a dental clinic in Warsaw Mokotów. Currently no ads running. Want to attract implant patients."
+          placeholder="np. Gabinet stomatologiczny w Warszawie. Mam agencję która bierze 2 500 zł/mies i nie wiem czy to opłacalne."
           rows={4}
           {...register("message")}
         />
@@ -199,18 +201,18 @@ export default function LeadForm() {
         {isSubmitting ? (
           <>
             <Loader2 size={16} className="animate-spin" />
-            Sending...
+            Wysyłanie...
           </>
         ) : (
           <>
-            Book Free Strategy Call
+            Umów bezpłatną rozmowę
             <ArrowRight size={15} />
           </>
         )}
       </Button>
 
       <p className="text-center text-xs text-muted-foreground">
-        I respond within 24 hours. Your data is never sold or shared.
+        Odpowiadam w ciągu 24 godzin. Twoich danych nigdy nie sprzedaję.
       </p>
     </form>
   );
