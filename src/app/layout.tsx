@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import Navbar from "@/components/layout/Navbar";
-import { CartProvider } from "@/components/cart/CartContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Liqware — AI Marketing dla lokalnych firm",
-  description: "Generujemy leady dla polskich lokalnych firm przez Meta i Google Ads. Analiza reklam oparta o AI, stała miesięczna opłata, mierzalne efekty.",
+  title: "Liqware — AI Marketing Agency | Meta & Google Ads",
+  description:
+    "We generate predictable leads for local Polish businesses via Meta Ads and Google Ads. AI-first approach, fixed monthly fee, measurable ROI.",
 };
 
 export default function RootLayout({
@@ -15,15 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl" suppressHydrationWarning>
-      <body className="font-sans antialiased min-h-screen">
-        <CartProvider>
-          <Navbar />
-          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-            {children}
-          </main>
-          <Toaster richColors position="top-right" />
-        </CartProvider>
+    <html lang="pl" className="dark" suppressHydrationWarning>
+      <body className="font-sans antialiased min-h-screen bg-background text-foreground overflow-x-hidden">
+        <Navbar />
+        <main>{children}</main>
+        <Toaster richColors position="top-right" theme="dark" />
       </body>
     </html>
   );
